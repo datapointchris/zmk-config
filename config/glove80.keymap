@@ -69,8 +69,6 @@
     /* Input Listeners */
     /* System behavior and Macros */
 
-    /
-
     behaviors {
         ZMK_TD_LAYER(lower, LAYER_Lower)
     };
