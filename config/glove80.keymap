@@ -38,7 +38,7 @@
     ZMK_TAP_DANCE(name, \
         tapping-term-ms = <200>; \
         bindings = <&mo layer>, <&to layer>; \
-)
+    )
 
 /* Automatically generated layer name #define */
 
@@ -64,8 +64,8 @@
 
 / {
     behaviors {
-        ZMK_TD_LAYER(lower, LAYER_Lower)
-        ZMK_TD_LAYER(layer_tap_dance_1, 1)
+        ZMK_TD_LAYER(lower, LAYER_Lower);
+        ZMK_TD_LAYER(layer_tap_dance_1, 1);
 
         bt_0: bt_0 {
             compatible = "zmk,behavior-tap-dance";
@@ -137,7 +137,6 @@
 };
 
 / {
-
     macros {
         rgb_ug_status_macro: rgb_ug_status_macro {
             label = "RGB_UG_STATUS";
@@ -175,11 +174,6 @@
         };
     };
 };
-
-
-
-
-
 
 / {
     keymap {
