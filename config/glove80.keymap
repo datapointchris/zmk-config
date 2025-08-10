@@ -34,19 +34,6 @@
 #define CONCAT_(a, b) a##b
 #define CONCAT(a, b) CONCAT_(a, b)
 
-#define ZMK_BEHAVIOR_CORE_tap_dance  \
-    compatible = "zmk,behavior-tap-dance"; \
-    #binding-cells = <0>
-
-#define ZMK_BEHAVIOR(name, type, ...) \
-    name: name { \
-        ZMK_BEHAVIOR_CORE_ ## type; \
-        __VA_ARGS__ \
-    };
-
-#define ZMK_TAP_DANCE(name, ...) \
-    ZMK_BEHAVIOR(name, tap_dance, __VA_ARGS__)
-
 #define ZMK_TD_LAYER(name, layer) \
     ZMK_TAP_DANCE(name, \
         tapping-term-ms = <200>; \
@@ -256,24 +243,33 @@
 #define KEYS_R RT0 RT1 RT2 RT3 RT4 RM0 RM1 RM2 RM3 RM4 RB0 RB1 RB2 RB3 RB4  // Right-hand keys.
 #define THUMBS LH2 LH1 LH0 RH0 RH1 RH2                                      // Thumb keys.
 
-#define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS)                                 \
-  ZMK_HOLD_TAP(NAME, bindings = <HOLD>, <TAP>; flavor = "balanced";            \
-               tapping-term-ms = <280>; quick-tap-ms = <QUICK_TAP_MS>;         \
-               require-prior-idle-ms = <150>; hold-trigger-on-release;         \
-               hold-trigger-key-positions = <TRIGGER_POS>;)
-
-MAKE_HRM(hml, &kp, &kp, KEYS_R THUMBS) // Left-hand HRMs.
-MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
-
-// Hack: Make HRM combos tap-only (cf, ZMK issue #544).
-#define ZMK_COMBO_8(NAME, TAP, POS, LAYERS, COMBO_MS, IDLE_MS, HOLD, SIDE)     \
-  MAKE_HRM(hm_combo_##NAME, &kp, TAP, SIDE THUMBS)                             \
-  ZMK_COMBO_6(NAME, &hm_combo_##NAME HOLD 0, POS, LAYERS, COMBO_MS, IDLE_MS)
-
-
 / {
     behaviors {
-        // Layer tap dance behaviors
+        hml: hml {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LEFT_HAND_HRM";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-on-release;
+            hold-trigger-key-positions = <5 6 7 8 9 17 18 19 20 21 29 30 31 32 33 41 42 43 44 45 55 56 57 72 73 74>;
+            bindings = <&kp>, <&kp>;
+        };
+
+        hmr: hmr {
+            compatible = "zmk,behavior-hold-tap";
+            label = "RIGHT_HAND_HRM";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-on-release;
+            hold-trigger-key-positions = <0 1 2 3 4 10 11 12 13 14 22 23 24 25 26 34 35 36 37 38 52 53 54 69 70 71>;
+            bindings = <&kp>, <&kp>;
+        };
 
         ZMK_TD_LAYER(layer_tap_dance_1, 1)
     };
