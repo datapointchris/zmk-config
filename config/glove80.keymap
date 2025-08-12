@@ -14,8 +14,8 @@
 
 
 /* https://github.com/urob/zmk-helpers/ */
-#include "zmk-helpers/helper.h"
-#include "zmk-helpers/key-labels/glove80.h"
+// #include "zmk-helpers/helper.h"
+// #include "zmk-helpers/key-labels/glove80.h"
 
 #define Base 0
 #define Developer 1
