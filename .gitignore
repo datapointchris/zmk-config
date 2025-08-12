@@ -4,3 +4,5 @@ modules
 zephyr
 zmk
 zmk-helpers
+*~
+*.uf2
