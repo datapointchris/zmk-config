@@ -179,9 +179,9 @@
             bindings = <
    &trans          &trans           &trans           &trans           &trans                                                                                                                                  &trans          &trans          &trans           &trans           &trans
    &trans          &trans           &trans           &trans           &trans           &trans                                                                                                 &trans          &trans          &trans          &trans           &trans           &trans
-   &trans          &trans           &trans           &trans           &trans           &trans                                                                                                 &trans          &kp GRAVE       &kp STAR        &kp PLUS         &kp EQUAL        &trans
+   &trans          &trans           &trans           &trans           &trans           &trans                                                                                                 &kp CARET       &kp GRAVE       &kp STAR        &kp PLUS         &kp EQUAL        &trans
    &trans          &trans           &trans           &trans           &trans           &trans                                                                                                 &kp PIPE        &kp MINUS       &kp LPAR        &kp RPAR         &kp UNDERSCORE   &kp MINUS
-   &trans          &trans           &trans           &trans           &trans           &trans           &trans    &trans     &trans         &trans     &trans                 &trans          &trans          &trans          &kp LBKT        &kp RBKT         &trans           &trans
+   &trans          &trans           &trans           &trans           &trans           &trans           &trans    &trans     &trans         &trans     &trans                 &trans          &kp PERCENT     &kp DOLLAR      &kp LBKT        &kp RBKT         &kp AMPERSAND    &trans
    &trans          &trans           &trans           &trans           &trans                            &trans    &trans     &trans         &trans     &trans                 &trans                          &trans          &trans          &trans           &trans           &trans
             >;
         };
@@ -208,10 +208,10 @@
         MOUSE {
             bindings = <
    &trans          &trans           &trans           &trans           &trans                                                                                                                                  &trans          &trans          &trans           &trans           &trans
+   &trans          &trans           &trans           &trans           &trans           &trans                                                                                                 &trans          &trans          &trans          &trans           &trans           &trans
    &trans          &trans           &trans           &trans           &trans           &trans                                                                                                 &none           &kp PG_UP       &mmv MOVE_UP    &kp PG_DN        &none            &none
-   &trans          &trans           &trans           &trans           &trans           &trans                                                                                                 &msc SCRL_LEFT  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none            &none
-   &trans          &trans           &trans           &trans           &trans           &trans                                                                                                 &none           &mkp LCLK       &mkp MCLK       &mkp RCLK        &none            &none
-   &trans          &trans           &trans           &trans           &trans           &trans           &trans    &trans     &trans         &trans     &trans                 &trans          &trans          &trans          &trans          &trans           &trans           &trans
+   &trans          &trans           &trans           &trans           &trans           &trans                                                                                                 &msc SCRL_LEFT  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &mkp MB4         &mkp MB5
+   &trans          &trans           &trans           &trans           &trans           &trans           &trans    &trans     &trans         &trans     &trans                 &trans          &none           &mkp LCLK       &mkp MCLK       &mkp RCLK        &none            &none
    &trans          &trans           &trans           &trans           &trans                            &trans    &trans     &to 0          &trans     &msc SCRL_UP           &msc SCRL_DOWN                  &trans          &trans          &trans           &trans           &trans
             >;
         };
