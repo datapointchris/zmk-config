@@ -15,9 +15,10 @@ GLOVE80_LAYOUT := glove80_layout.json
 CORNE42_LAYOUT := corne42_layout.json
 
 # Test files
-TEST_SCRIPT := $(TESTS_DIR)/test_align_keymap.py
+TEST_DIR := $(TESTS_DIR)
+PYTEST_FILE := $(TESTS_DIR)/test_align_keymap.py
 
-.PHONY: help align-glove80 align-corne42 align test build clean
+.PHONY: help align-glove80 align-corne42 align test test-verbose build clean
 
 # Default target - show help
 help:
@@ -28,7 +29,8 @@ help:
 	@echo "  align-glove80  - Align Glove80 keymap in place"
 	@echo "  align-corne42  - Align Corne42 keymap in place" 
 	@echo "  align          - Align both keymaps"
-	@echo "  test           - Run the test suite"
+	@echo "  test           - Run the test suite with pytest"
+	@echo "  test-verbose   - Run tests with detailed output" 
 	@echo "  build          - Build firmware using Docker"
 	@echo "  clean          - Clean up temporary files"
 	@echo "  help           - Show this help message"
@@ -73,13 +75,18 @@ align: align-glove80 align-corne42
 
 # Run tests
 test:
-	@echo "🧪 Running test suite..."
-	@if [ ! -f "$(TEST_SCRIPT)" ]; then \
-		echo "❌ Error: $(TEST_SCRIPT) not found"; \
+	@echo "🧪 Running test suite with pytest..."
+	@if [ ! -f "$(PYTEST_FILE)" ]; then \
+		echo "❌ Error: $(PYTEST_FILE) not found"; \
 		exit 1; \
 	fi
-	$(PYTHON) $(TEST_SCRIPT)
+	$(PYTHON) -m pytest $(PYTEST_FILE) -v
 	@echo "✅ All tests passed!"
+
+# Run tests with extra verbose output
+test-verbose:
+	@echo "🧪 Running test suite with verbose output..."
+	$(PYTHON) -m pytest $(PYTEST_FILE) -vvv --tb=long
 
 # Build firmware using Docker
 build:

@@ -50,7 +50,7 @@ STOCK_ZMK_BEHAVIORS = {
 }
 
 # Behaviors that take multiple parameters (including behavior parameters)
-MULTI_PARAM_BEHAVIORS = {"&hmr", "&hml", "&ltl", "&ltr", "&td"}
+MULTI_PARAM_BEHAVIORS = {"&hmr", "&hml", "&hmrt", "&hmlt", "&ltl", "&ltr", "&td"}
 
 # Default padding for column alignment
 DEFAULT_COLUMN_PADDING = 2
@@ -138,6 +138,8 @@ def _handle_multi_param_behavior(tokens, i, binding_parts):
     behavior_param_rules = {
         "&hmr": [1, 2],  # Can take 1 or 2 parameters
         "&hml": [1, 2],  # Can take 1 or 2 parameters  
+        "&hmrt": [1, 2], # Can take 1 or 2 parameters
+        "&hmlt": [1, 2], # Can take 1 or 2 parameters
         "&ltl": [2],     # Always takes 2 parameters
         "&ltr": [2],     # Always takes 2 parameters
         "&td": [1, 2],   # Can take 1 or 2 parameters
@@ -147,8 +149,8 @@ def _handle_multi_param_behavior(tokens, i, binding_parts):
     
     while i < len(tokens) and param_count < max_params:
         if tokens[i].startswith("&"):
-            # For behaviors like &hmr and &hml, a behavior can be the second parameter
-            if param_count == 0 or (param_count == 1 and behavior in ["&hmr", "&hml"]):
+            # For behaviors like &hmr, &hml, &hmrt, &hmlt, a behavior can be the second parameter
+            if param_count == 0 or (param_count == 1 and behavior in ["&hmr", "&hml", "&hmrt", "&hmlt"]):
                 binding_parts.append(tokens[i])
                 i += 1
                 param_count += 1
