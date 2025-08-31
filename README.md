@@ -18,8 +18,8 @@ A comprehensive ZMK keymap alignment tool that formats and validates ZMK keymap 
 # Align Glove80 keymap
 make align-glove80
 
-# Align Corne42 keymap  
-make align-corne42
+# Align Corne keymap  
+make align-corne
 
 # Align both keyboards
 make align
@@ -89,7 +89,7 @@ Layout files define the physical keyboard matrix in JSON format:
 ├── Makefile                 # Build and test automation
 ├── config/                  # Keymap configurations
 │   ├── glove80.keymap      
-│   └── corne42.keymap      
+│   └── corne.keymap      
 ├── tests/                   # Comprehensive test suite
 │   ├── layouts/            # JSON layout files
 │   ├── test_keymaps/       
@@ -99,7 +99,7 @@ Layout files define the physical keyboard matrix in JSON format:
 │   ├── simple_tests/       # Simple test cases
 │   └── test_align_keymap.py  # Main test file
 ├── glove80_layout.json     # Glove80 80-key layout
-└── corne42_layout.json     # Corne42 42-key layout
+└── corne_layout.json     # Corne 42-key layout
 ```
 
 ## Testing
@@ -194,7 +194,7 @@ Expected output: `20 passed in X.XXs` with pytest
 ## Supported Keyboards
 
 - **Glove80** - 80-key split keyboard with thumb clusters
-- **Corne42** - 42-key split keyboard
+- **Corne** - 42-key split keyboard
 - **Custom layouts** - Any keyboard with JSON layout definition
 
 ## Requirements

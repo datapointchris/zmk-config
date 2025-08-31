@@ -20,7 +20,7 @@ show_help() {
     echo ""
     echo "KEYBOARD options:"
     echo "  glove80   - Build only Glove80 firmware"
-    echo "  corne42   - Build only Corne42 firmware"  
+    echo "  corne     - Build only Corne firmware"  
     echo "  both      - Build both keyboards (default)"
     echo ""
     echo "BRANCH options (Glove80 only):"
@@ -32,10 +32,10 @@ show_help() {
     echo "  $0                    # Build both keyboards"
     echo "  $0 glove80           # Build Glove80 with main branch"
     echo "  $0 glove80 beta      # Build Glove80 with beta branch"
-    echo "  $0 corne42           # Build Corne42"
+    echo "  $0 corne             # Build Corne"
     echo "  $0 both              # Build both keyboards"
     echo ""
-    echo -e "${YELLOW}Note: Corne42 uses standard ZMK, Glove80 uses Moergo's custom ZMK fork${NC}"
+    echo -e "${YELLOW}Note: Corne uses standard ZMK, Glove80 uses Moergo's custom ZMK fork${NC}"
 }
 
 build_glove80() {
@@ -69,8 +69,8 @@ build_glove80() {
     fi
 }
 
-build_corne42() {
-    echo -e "${BLUE}🏗️  Building Corne42 firmware...${NC}"
+build_corne() {
+    echo -e "${BLUE}🏗️  Building Corne firmware...${NC}"
     echo -e "${YELLOW}Using standard ZMK with official Docker container${NC}"
     
     if ! command -v docker >/dev/null 2>&1; then
@@ -113,31 +113,31 @@ build_corne42() {
         # Change to app directory as required by ZMK documentation
         cd app
         
-        echo 'Building Corne42 left half...'
+        echo 'Building Corne left half...'
         west build -d build/left -p -b nice_nano_v2 -- \
           -DSHIELD='corne_left nice_view_adapter nice_view' \
           -DZMK_CONFIG=/workspaces/zmk-config
-        cp build/left/zephyr/zmk.uf2 /workspaces/zmk-config/corne42_left.uf2
+        cp build/left/zephyr/zmk.uf2 /workspaces/zmk-config/corne_left.uf2
         
-        echo 'Building Corne42 right half...'
+        echo 'Building Corne right half...'
         west build -d build/right -p -b nice_nano_v2 -- \
           -DSHIELD='corne_right nice_view_adapter nice_view' \
           -DZMK_CONFIG=/workspaces/zmk-config
-        cp build/right/zephyr/zmk.uf2 /workspaces/zmk-config/corne42_right.uf2
+        cp build/right/zephyr/zmk.uf2 /workspaces/zmk-config/corne_right.uf2
         
-        echo 'Corne42 firmware built successfully!'
+        echo 'Corne firmware built successfully!'
       "
 
     # Copy the built files back to the host (SAFE)
     docker run --rm -v zmk-config:/workspaces/zmk-config -v "$PWD:/host" alpine:latest \
-      sh -c "cp /workspaces/zmk-config/corne42_*.uf2 /host/ 2>/dev/null || true"
+      sh -c "cp /workspaces/zmk-config/corne_*.uf2 /host/ 2>/dev/null || true"
 
     # Verify files were created
-    if [ -f "corne42_left.uf2" ] && [ -f "corne42_right.uf2" ]; then
-        echo -e "${GREEN}✅ Corne42 firmware built successfully:${NC}"
-        ls -lh corne42_*.uf2
+    if [ -f "corne_left.uf2" ] && [ -f "corne_right.uf2" ]; then
+        echo -e "${GREEN}✅ Corne firmware built successfully:${NC}"
+        ls -lh corne_*.uf2
     else
-        echo -e "${RED}❌ Corne42 build failed - no output files found${NC}"
+        echo -e "${RED}❌ Corne build failed - no output files found${NC}"
         exit 1
     fi
 }
@@ -147,15 +147,15 @@ case "$KEYBOARD" in
     "glove80")
         build_glove80
         ;;
-    "corne42")
-        build_corne42
+    "corne")
+        build_corne
         ;;
     "both")
         echo -e "${BLUE}🏗️  Building firmware for both keyboards...${NC}"
         echo ""
         build_glove80
         echo ""
-        build_corne42
+        build_corne
         echo ""
         echo -e "${GREEN}🎉 All firmware built successfully!${NC}"
         echo "Output files:"
