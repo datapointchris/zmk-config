@@ -3,7 +3,7 @@ name: Build
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  build:
+  build-glove80:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,3 +30,5 @@ jobs:
         with:
           name: glove80.uf2
           path: glove80.uf2
+  build-corne42:
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main

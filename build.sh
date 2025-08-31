@@ -115,13 +115,13 @@ build_corne42() {
         
         echo 'Building Corne42 left half...'
         west build -d build/left -p -b nice_nano_v2 -- \
-          -DSHIELD=corne_left \
+          -DSHIELD='corne_left nice_view_adapter nice_view' \
           -DZMK_CONFIG=/workspaces/zmk-config
         cp build/left/zephyr/zmk.uf2 /workspaces/zmk-config/corne42_left.uf2
         
         echo 'Building Corne42 right half...'
         west build -d build/right -p -b nice_nano_v2 -- \
-          -DSHIELD=corne_right \
+          -DSHIELD='corne_right nice_view_adapter nice_view' \
           -DZMK_CONFIG=/workspaces/zmk-config
         cp build/right/zephyr/zmk.uf2 /workspaces/zmk-config/corne42_right.uf2
         
