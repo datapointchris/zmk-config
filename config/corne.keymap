@@ -46,7 +46,6 @@ Behavior explanations
     behaviors {
         hml: home_row_mod_left {
             compatible = "zmk,behavior-hold-tap";
-            label = "LEFT_HAND_HRM";
             #binding-cells = <2>;
             flavor = "balanced";
             tapping-term-ms = <280>;
@@ -59,7 +58,6 @@ Behavior explanations
 
         hmr: home_row_mod_right {
             compatible = "zmk,behavior-hold-tap";
-            label = "RIGHT_HAND_HRM";
             #binding-cells = <2>;
             flavor = "balanced";
             tapping-term-ms = <280>;
@@ -72,7 +70,6 @@ Behavior explanations
 
         ltl: layer_tap_left {
             compatible = "zmk,behavior-hold-tap";
-            label = "LEFT_HAND_LAYER_TAP";
             #binding-cells = <2>;
             flavor = "balanced";
             tapping-term-ms = <280>;
@@ -85,7 +82,6 @@ Behavior explanations
 
         ltr: layer_tap_right {
             compatible = "zmk,behavior-hold-tap";
-            label = "RIGHT_HAND_LAYER_TAP";
             #binding-cells = <2>;
             flavor = "balanced";
             tapping-term-ms = <280>;
@@ -107,50 +103,50 @@ Behavior explanations
         compatible = "zmk,keymap";
         BASE {
             bindings = <
-   &kp TAB      &kp Q         &ltl MOUSE W    &ltl NAV E      &kp R            &kp T                                       &kp Y           &kp U           &kp I           &kp O            &kp P           &kp BSLH
-   &kp ESC      &kp A         &hml LGUI S     &hml LALT D     &hml LCTRL F     &ltl NPAD G                                 &ltr NPAD H     &hmr RCTRL J    &hmr RALT K     &hmr RGUI L      &kp SEMI        &kp SQT
-   &kp GRAVE    &kp Z         &kp X           &kp C           &kp V            &kp B                                       &kp N           &kp M           &kp COMMA       &kp DOT          &kp FSLH        &mo MAGIC
-                                                              &mo DEV          &kp BSPC      &hml SHIFT TAB  &caps         &kp SPACE       &kp RET
+   &kp TAB      &kp Q         &ltl MOUSE W    &ltl NAV E      &kp R            &kp T                                        &kp Y           &kp U           &kp I           &kp O            &kp P           &kp BSLH
+   &kp ESC      &kp A         &hml LGUI S     &hml LALT D     &hml LCTRL F     &ltl NPAD G                                  &ltr NPAD H     &hmr RCTRL J    &hmr RALT K     &hmr RGUI L      &kp SEMI        &kp SQT
+   &kp GRAVE    &kp Z         &kp X           &kp C           &kp V            &kp B                                        &kp N           &kp M           &kp COMMA       &kp DOT          &kp FSLH        &mo MAGIC
+                                                              &mo DEV          &kp BSPC      &hml LSHIFT TAB  &caps         &kp SPACE       &kp RET
             >;
         };
         DEV {
             bindings = <
-   &trans       &trans        &trans          &trans          &trans           &trans                                      &kp CARET       &kp GRAVE       &kp STAR        &kp PLUS         &kp EQUAL       &trans
-   &trans       &trans        &trans          &trans          &trans           &trans                                      &kp HASH        &kp PIPE        &kp LPAR        &kp RPAR         &kp UNDERSCORE  &kp MINUS
-   &trans       &trans        &trans          &trans          &trans           &trans                                      &kp DOLLAR      &kp PERCENT     &kp LBKT        &kp RBKT         &kp AMPERSAND   &trans
-                                                              &trans           &trans        &trans          &trans        &trans          &trans
+   &trans       &trans        &trans          &trans          &trans           &trans                                       &kp CARET       &kp GRAVE       &kp STAR        &kp PLUS         &kp EQUAL       &trans
+   &trans       &trans        &trans          &trans          &trans           &trans                                       &kp HASH        &kp PIPE        &kp LPAR        &kp RPAR         &kp UNDERSCORE  &kp MINUS
+   &trans       &trans        &trans          &trans          &trans           &trans                                       &kp DOLLAR      &kp PERCENT     &kp LBKT        &kp RBKT         &kp AMPERSAND   &trans
+                                                              &trans           &trans        &trans           &trans        &trans          &trans
             >;
         };
         NPAD {
             bindings = <
-   &kp C_PREV   &kp C_NEXT    &kp C_PP        &kp C_VOL_DN    &kp C_VOL_UP     &kp C_MUTE                                  &kp LPAR        &kp KP_N7       &kp KP_N8       &kp KP_N9        &kp KP_MINUS    &kp SCROLLLOCK
-   &trans       &none         &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp PG_UP                                   &kp PERCENT     &kp KP_N4       &kp KP_N5       &kp KP_N6        &kp KP_PLUS     &none
-   &trans       &kp K_APP     &none           &kp F11         &kp F12          &kp PG_DN                                   &kp COMMA       &kp KP_N1       &kp KP_N2       &kp KP_N3        &kp KP_ENTER    &trans
-                                                              &trans           &trans        &to 0           &trans        &trans          &kp KP_N0
+   &kp C_PREV   &kp C_NEXT    &kp C_PP        &kp C_VOL_DN    &kp C_VOL_UP     &kp C_MUTE                                   &kp LPAR        &kp KP_N7       &kp KP_N8       &kp KP_N9        &kp KP_MINUS    &kp SCROLLLOCK
+   &trans       &none         &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp PG_UP                                    &kp PERCENT     &kp KP_N4       &kp KP_N5       &kp KP_N6        &kp KP_PLUS     &none
+   &trans       &kp K_APP     &none           &kp F11         &kp F12          &kp PG_DN                                    &kp COMMA       &kp KP_N1       &kp KP_N2       &kp KP_N3        &kp KP_ENTER    &trans
+                                                              &trans           &trans        &to 0            &trans        &trans          &kp KP_N0
             >;
         };
         MAGIC {
             bindings = <
-   &bt BT_CLR   &bt BT_SEL 0  &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3     &bt BT_SEL 4                                &none           &none           &none           &none            &none           &bt BT_CLR_ALL
-   &bootloader  &none         &none           &none           &none            &none                                       &none           &none           &none           &none            &none           &bootloader
-   &sys_reset   &none         &none           &none           &none            &none                                       &none           &none           &none           &none            &none           &sys_reset
-                                                              &none            &none         &out OUT_USB    &out OUT_BLE  &none           &none
+   &bt BT_CLR   &bt BT_SEL 0  &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3     &bt BT_SEL 4                                 &none           &none           &none           &none            &none           &bt BT_CLR_ALL
+   &bootloader  &none         &none           &none           &none            &none                                        &none           &none           &none           &none            &none           &bootloader
+   &sys_reset   &none         &none           &none           &none            &none                                        &none           &none           &none           &none            &none           &sys_reset
+                                                              &none            &none         &out OUT_USB     &out OUT_BLE  &none           &none
             >;
         };
         MOUSE {
             bindings = <
-   &trans       &trans        &trans          &trans          &trans           &trans                                      &none           &kp PG_UP       &mmv MOVE_UP    &kp PG_DN        &none           &none
-   &trans       &trans        &trans          &trans          &trans           &trans                                      &msc SCRL_LEFT  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &mkp MB4        &mkp MB5
-   &trans       &trans        &trans          &trans          &trans           &trans                                      &none           &mkp LCLK       &mkp MCLK       &mkp RCLK        &none           &none
-                                                              &trans           &trans        &none           &trans        &msc SCRL_UP    &msc SCRL_DOWN
+   &trans       &trans        &trans          &trans          &trans           &trans                                       &none           &kp PG_UP       &mmv MOVE_UP    &kp PG_DN        &none           &none
+   &trans       &trans        &trans          &trans          &trans           &trans                                       &msc SCRL_LEFT  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &mkp MB4        &mkp MB5
+   &trans       &trans        &trans          &trans          &trans           &trans                                       &none           &mkp LCLK       &mkp MCLK       &mkp RCLK        &none           &none
+                                                              &trans           &trans        &none            &trans        &msc SCRL_UP    &msc SCRL_DOWN
             >;
         };
         NAV {
             bindings = <
-   &trans       &trans        &trans          &trans          &trans           &trans                                      &none           &kp N7          &kp N8          &kp N9           &none           &none
-   &trans       &trans        &trans          &trans          &trans           &trans                                      &none           &kp N4          &kp N5          &kp N6           &none           &none
-   &trans       &trans        &trans          &trans          &trans           &trans                                      &none           &kp N1          &kp N2          &kp N3           &none           &none
-                                                              &kp LGUI         &trans        &none           &trans        &none           &kp N0
+   &trans       &trans        &trans          &trans          &trans           &trans                                       &none           &kp N7          &kp N8          &kp N9           &none           &none
+   &trans       &trans        &trans          &trans          &trans           &trans                                       &none           &kp N4          &kp N5          &kp N6           &none           &none
+   &trans       &trans        &trans          &trans          &trans           &trans                                       &none           &kp N1          &kp N2          &kp N3           &none           &none
+                                                              &kp LGUI         &trans        &none            &trans        &none           &kp N0
             >;
         };
     };
