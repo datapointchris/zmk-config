@@ -8,7 +8,7 @@ TESTS_DIR := tests
 
 # Keymap files
 GLOVE80_KEYMAP := $(CONFIG_DIR)/glove80.keymap
-CORNE42_KEYMAP := $(CONFIG_DIR)/corne42.keymap
+CORNE42_KEYMAP := $(CONFIG_DIR)/corne.keymap
 
 # Layout files
 GLOVE80_LAYOUT := glove80_layout.json
