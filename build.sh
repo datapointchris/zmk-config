@@ -78,12 +78,9 @@ build_corne() {
         exit 1
     fi
 
-    # Check if zmk-config Docker volume exists, create if it doesn't
-    if ! docker volume ls | grep -q zmk-config; then
-        echo -e "${YELLOW}Creating zmk-config Docker volume...${NC}"
-        docker volume create zmk-config
-    fi
-
+    # Get absolute path to current directory for bind mounting
+    ZMK_CONFIG_PATH="$(pwd)"
+    
     # Check if ZMK source exists
     ZMK_PATH="/Users/chris/code/zmk"
     if [ ! -d "$ZMK_PATH" ]; then
@@ -92,18 +89,24 @@ build_corne() {
         git clone https://github.com/zmkfirmware/zmk.git "$ZMK_PATH"
     fi
 
+    # Create/recreate the zmk-config volume as a bind mount (following official docs)
+    echo -e "${YELLOW}Setting up zmk-config volume as bind mount...${NC}"
+    docker volume ls | grep -q zmk-config && docker volume rm zmk-config >/dev/null 2>&1 || true
+    docker volume create --driver local \
+      -o o=bind \
+      -o type=none \
+      -o device="$ZMK_CONFIG_PATH" \
+      zmk-config
+
     echo -e "${YELLOW}Building with official ZMK Docker container...${NC}"
     
-    # Use the official ZMK Docker image with proper volume mounting
+    # Use the official ZMK Docker image with proper bind-mounted volume
     docker run --rm \
       -v zmk-config:/workspaces/zmk-config \
       -v "$ZMK_PATH:/workspaces/zmk" \
       -w /workspaces/zmk \
       zmkfirmware/zmk-build-arm:3.5-branch \
       /bin/bash -c "
-        # Copy current config to the volume (SAFE - no rm commands)
-        cp -r $PWD/config/* /workspaces/zmk-config/ 2>/dev/null || true
-        
         # Initialize the workspace if not already done
         if [ ! -f .west/config ]; then
           west init -l app/
@@ -116,23 +119,19 @@ build_corne() {
         echo 'Building Corne left half...'
         west build -d build/left -p -b nice_nano_v2 -- \
           -DSHIELD='corne_left nice_view_adapter nice_view' \
-          -DZMK_CONFIG=/workspaces/zmk-config
+          -DZMK_CONFIG=/workspaces/zmk-config/config
         cp build/left/zephyr/zmk.uf2 /workspaces/zmk-config/corne_left.uf2
         
         echo 'Building Corne right half...'
         west build -d build/right -p -b nice_nano_v2 -- \
           -DSHIELD='corne_right nice_view_adapter nice_view' \
-          -DZMK_CONFIG=/workspaces/zmk-config
+          -DZMK_CONFIG=/workspaces/zmk-config/config
         cp build/right/zephyr/zmk.uf2 /workspaces/zmk-config/corne_right.uf2
         
         echo 'Corne firmware built successfully!'
       "
 
-    # Copy the built files back to the host (SAFE)
-    docker run --rm -v zmk-config:/workspaces/zmk-config -v "$PWD:/host" alpine:latest \
-      sh -c "cp /workspaces/zmk-config/corne_*.uf2 /host/ 2>/dev/null || true"
-
-    # Verify files were created
+    # Verify files were created (they should be directly in our local directory now)
     if [ -f "corne_left.uf2" ] && [ -f "corne_right.uf2" ]; then
         echo -e "${GREEN}✅ Corne firmware built successfully:${NC}"
         ls -lh corne_*.uf2
