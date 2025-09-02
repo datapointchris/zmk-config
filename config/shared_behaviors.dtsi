@@ -8,7 +8,7 @@
 #define BASE 0
 #define DEV 1
 #define NPAD 2
-#define MAGIC 3
+#define SYSTEM 3
 #define MOUSE 4
 #define NAV 5
 
