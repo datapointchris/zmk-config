@@ -41,7 +41,7 @@
    &kp C_PREV   &kp C_NEXT     &kp C_PP        &kp UP_ARROW    &kp C_VOL_UP     &kp C_MUTE                                 &kp LPAR        &kp KP_N7       &kp KP_N8       &kp KP_N9        &kp KP_MINUS      &kp SCROLLLOCK
    &trans       &none          &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp PG_UP                                  &kp PERCENT     &kp KP_N4       &kp KP_N5       &kp KP_N6        &kp KP_PLUS       &none
    &trans       &kp K_APP      &none           &kp F11         &kp F12          &kp PG_DN                                  &kp COMMA       &kp KP_N1       &kp KP_N2       &kp KP_N3        &kp KP_ENTER      &trans
-                                                               &trans           &trans        &to 0         &trans         &kp KP_N0       &kp KP_N0
+                                                               &trans           &trans        &none         &trans         &kp KP_N0       &kp KP_N0
             >;
         };
         SYSTEM {
@@ -62,8 +62,8 @@
         };
         NAV {
             bindings = <
-   &trans       &kp LGUI N1    &kp LGUI N2     &kp LGUI N3     &kp LGUI N4      &trans                                     &none           &none           &none           &none            &none             &none
-   &trans       &kp LGUI N5    &kp LGUI N6     &kp LGUI N7     &kp LGUI N8      &trans                                     &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW    &kp RIGHT_ARROW  &none             &none
+   &trans       &kp LGUI(N1)   &kp LGUI(N2)    &kp LGUI(N3)    &kp LGUI(N4)     &trans                                     &none           &none           &none           &none            &none             &none
+   &trans       &kp LGUI(N5)   &kp LGUI(N6)    &kp LGUI(N7)    &kp LGUI(N8)     &trans                                     &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW    &kp RIGHT_ARROW  &none             &none
    &trans       &trans         &trans          &trans          &trans           &trans                                     &none           &none           &none           &none            &none             &none
                                                                &none            &trans        &trans        &trans         &none           &none
             >;
