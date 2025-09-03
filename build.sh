@@ -73,6 +73,16 @@ build_corne() {
     echo -e "${BLUE}🏗️  Building Corne firmware...${NC}"
     echo -e "${YELLOW}Using standard ZMK with official Docker container${NC}"
     
+    # Check timestamps before build
+    left_old_ts=""
+    right_old_ts=""
+    if [ -f "corne_left.uf2" ]; then
+        left_old_ts=$(stat -f "%m" corne_left.uf2)
+    fi
+    if [ -f "corne_right.uf2" ]; then
+        right_old_ts=$(stat -f "%m" corne_right.uf2)
+    fi
+    
     if ! command -v docker >/dev/null 2>&1; then
         echo -e "${RED}❌ Error: Docker not found. Please install Docker to build firmware.${NC}"
         exit 1
@@ -130,16 +140,6 @@ build_corne() {
         
         echo 'Corne firmware built successfully!'
       "
-
-    # Check timestamps before build
-    left_old_ts=""
-    right_old_ts=""
-    if [ -f "corne_left.uf2" ]; then
-        left_old_ts=$(stat -f "%m" corne_left.uf2)
-    fi
-    if [ -f "corne_right.uf2" ]; then
-        right_old_ts=$(stat -f "%m" corne_right.uf2)
-    fi
 
     # Verify files were created and timestamps changed
     if [ -f "corne_left.uf2" ] && [ -f "corne_right.uf2" ]; then
