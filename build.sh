@@ -131,9 +131,30 @@ build_corne() {
         echo 'Corne firmware built successfully!'
       "
 
-    # Verify files were created (they should be directly in our local directory now)
+    # Check timestamps before build
+    left_old_ts=""
+    right_old_ts=""
+    if [ -f "corne_left.uf2" ]; then
+        left_old_ts=$(stat -f "%m" corne_left.uf2)
+    fi
+    if [ -f "corne_right.uf2" ]; then
+        right_old_ts=$(stat -f "%m" corne_right.uf2)
+    fi
+
+    # Verify files were created and timestamps changed
     if [ -f "corne_left.uf2" ] && [ -f "corne_right.uf2" ]; then
+        left_new_ts=$(stat -f "%m" corne_left.uf2)
+        right_new_ts=$(stat -f "%m" corne_right.uf2)
+        left_human=$(stat -f "%Sm" corne_left.uf2)
+        right_human=$(stat -f "%Sm" corne_right.uf2)
+        if [ "$left_new_ts" = "$left_old_ts" ] || [ "$right_new_ts" = "$right_old_ts" ]; then
+            echo -e "${RED}❌ Corne build failed or did not update UF2 files. Timestamp unchanged.${NC}"
+            echo -e "Left: $left_human | Right: $right_human"
+            exit 1
+        fi
         echo -e "${GREEN}✅ Corne firmware built successfully:${NC}"
+        echo "Left UF2: $left_human"
+        echo "Right UF2: $right_human"
         ls -lh corne_*.uf2
     else
         echo -e "${RED}❌ Corne build failed - no output files found${NC}"

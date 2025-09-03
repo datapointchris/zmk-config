@@ -62,8 +62,8 @@
         };
         NAV {
             bindings = <
-   &trans       &kp LGUI(N1)   &kp LGUI(N2)    &kp LGUI(N3)    &kp LGUI(N4)     &trans                                     &none           &none           &none           &none            &none             &none
-   &trans       &kp LGUI(N5)   &kp LGUI(N6)    &kp LGUI(N7)    &kp LGUI(N8)     &trans                                     &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW    &kp RIGHT_ARROW  &none             &none
+   &trans       &kp LG(N1)     &kp LG(N2)      &kp LG(N3)      &kp LG(N4)       &trans                                     &none           &none           &none           &none            &none             &none
+   &trans       &kp LG(N5)     &kp LG(N6)      &kp LG(N7)      &kp LG(N8)       &trans                                     &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW    &kp RIGHT_ARROW  &none             &none
    &trans       &trans         &trans          &trans          &trans           &trans                                     &none           &none           &none           &none            &none             &none
                                                                &none            &trans        &trans        &trans         &none           &none
             >;
