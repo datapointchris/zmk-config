@@ -165,29 +165,29 @@ build-corne:
 # Create keymap-drawer drawings
 draw:
 	@echo "Generating keymap drawings..."
-	keymap parse -z $(GLOVE80_KEYMAP) > $(GLOVE80_DRAWER_YAML)
-	keymap draw $(GLOVE80_DRAWER_YAML) > $(GLOVE80_SVG)
+	keymap -c keymap_drawer.config.yaml parse -c 12 -z $(GLOVE80_KEYMAP) > $(GLOVE80_DRAWER_YAML)
+	keymap -c keymap_drawer.config.yaml draw $(GLOVE80_DRAWER_YAML) > $(GLOVE80_SVG)
 	@echo "Glove80 drawing yaml generated: $(GLOVE80_DRAWER_YAML)"
 	@echo "Glove80 SVG generated: $(GLOVE80_SVG)"
 	
-	keymap parse -z $(CORNE_KEYMAP) > $(CORNE_DRAWER_YAML)
-	keymap draw $(CORNE_DRAWER_YAML) > $(CORNE_SVG)
+	keymap -c keymap_drawer.config.yaml parse -c 6 -z $(CORNE_KEYMAP) > $(CORNE_DRAWER_YAML)
+	keymap -c keymap_drawer.config.yaml draw $(CORNE_DRAWER_YAML) > $(CORNE_SVG)
 	@echo "Corne drawing yaml generated: $(CORNE_DRAWER_YAML)"
 	@echo "Corne SVG generated: $(CORNE_SVG)"
 	@echo "✅ Keymap drawings generated successfully"
 
 draw-glove80:
 	@echo "Generating Glove80 keymap drawing..."
-	keymap parse -z $(GLOVE80_KEYMAP) > $(GLOVE80_DRAWER_YAML)
-	keymap draw $(GLOVE80_DRAWER_YAML) > $(GLOVE80_SVG)
+	keymap -c keymap_drawer.config.yaml parse -c 12 -z $(GLOVE80_KEYMAP) > $(GLOVE80_DRAWER_YAML)
+	keymap -c keymap_drawer.config.yaml draw $(GLOVE80_DRAWER_YAML) > $(GLOVE80_SVG)
 	@echo "Glove80 drawing yaml generated: $(GLOVE80_DRAWER_YAML)"
 	@echo "Glove80 SVG generated: $(GLOVE80_SVG)"
 	@echo "✅ Glove80 keymap drawing generated successfully"
 
 draw-corne:
 	@echo "Generating Corne keymap drawing..."
-	keymap parse -z $(CORNE_KEYMAP) > $(CORNE_DRAWER_YAML)
-	keymap draw $(CORNE_DRAWER_YAML) > $(CORNE_SVG)
+	keymap -c keymap_drawer.config.yaml parse -c 6 -z $(CORNE_KEYMAP) > $(CORNE_DRAWER_YAML)
+	keymap -c keymap_drawer.config.yaml draw $(CORNE_DRAWER_YAML) > $(CORNE_SVG)
 	@echo "Corne drawing yaml generated: $(CORNE_DRAWER_YAML)"
 	@echo "Corne SVG generated: $(CORNE_SVG)"
 	@echo "✅ Corne keymap drawing generated successfully"
