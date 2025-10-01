@@ -131,13 +131,37 @@ JSON files define physical keyboard matrices:
 
 ## Visual Generation
 
-Uses [keymap-drawer](https://github.com/caksoylar/keymap-drawer) to generate SVG visualizations:
+Uses [keymap-drawer](https://github.com/caksoylar/keymap-drawer) for SVG visualizations. Parse manually to preserve YAML formatting.
 
-1. **Parse ZMK keymap** → YAML intermediate format
-2. **Generate SVG** from YAML using keymap-drawer
-3. **Output files**:
-   - `*_keymap.yaml` - Intermediate representation
-   - `*_keymap.svg` - Visual representation
+### Configuration
+
+- **`keymap_drawer.config.yaml`** - Custom behavior mappings and styling
+- **Column specification**: `-c 12` for both keyboards (6 columns per half × 2)
+
+### Workflow
+
+Parse and draw are decoupled for manual YAML control:
+
+```bash
+# 1. Parse .keymap → YAML (manual - after keymap changes)
+keymap -c keymap_drawer.config.yaml parse -c 12 -z config/corne.keymap > corne_keymap.yaml
+
+# 2. Draw YAML → SVG (automated - preserves YAML formatting)
+make draw-corne   # or draw-glove80, or draw (both)
+```
+
+### Output Files
+
+- `*_keymap.yaml` - Parsed keymap (edit manually for custom formatting)
+- `*_keymap.svg` - Visual diagram (regenerate with `make draw-*`)
+
+### Custom Behaviors
+
+Configured in `keymap_drawer.config.yaml`:
+
+- **Layer-taps**: `&ltl`, `&ltr`, `&ltlt`, `&ltrt` (finger/thumb)
+- **Home row mods**: `&hml`, `&hmr`, `&hmlt`, `&hmrt` (mod+key)
+- **Tap-dance**: `&bt_0-3`, `&caps_shift`, `&caps_return`
 
 ## Testing Framework
 
