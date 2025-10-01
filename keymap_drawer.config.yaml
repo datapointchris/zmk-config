@@ -6,13 +6,15 @@ parse_config:
   # Sticky label for one-shot/sticky keys
   sticky_label: "⏱"
   
-  # Transparent key styling
+  # Transparent key styling - use just "▽" in YAML
   trans_legend:
     t: "▽"
     type: trans
   
   # Simple mappings for tap-dance behaviors
   raw_binding_map:
+    # Shorthand aliases for common keys
+    "▽": {t: "▽", type: trans}  # Transparent key shorthand
     "&bt_0": "BT 0"
     "&bt_1": "BT 1"
     "&bt_2": "BT 2"
