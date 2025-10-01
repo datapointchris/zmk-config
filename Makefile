@@ -191,6 +191,18 @@ clean:
 	@rm -f ./*.uf2 2>/dev/null || true
 	@echo "✅ Cleanup completed!"
 
-# Convenience targets
-glove80: align-glove80
-corne: align-corne
+# Run all commands to sync
+sync:
+	@echo "🚀 Starting sync process..."
+	@start_time=$$(date +%s); \
+	if $(MAKE) align draw build; then \
+		end_time=$$(date +%s); \
+		elapsed=$$((end_time - start_time)); \
+		minutes=$$((elapsed / 60)); \
+		seconds=$$((elapsed % 60)); \
+		echo "🎉 All tasks completed successfully!"; \
+		echo "⏱️  Total time: $${minutes}m $${seconds}s"; \
+	else \
+		echo "❌ Sync failed - one or more tasks encountered an error"; \
+		exit 1; \
+	fi
