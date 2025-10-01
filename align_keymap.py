@@ -184,14 +184,18 @@ def _handle_standard_behavior(tokens, i, binding_parts):
 
 def extract_all_layers(keymap_content):
     layers = {}
-    # Match layer_name { bindings = < content >; }
-    layer_pattern = r"(\w+)\s*\{\s*bindings\s*=\s*<([^>]+)>\s*;"
+    # Match layer_name { [optional display-name = "...";] bindings = < content >; }
+    layer_pattern = r"(\w+)\s*\{\s*(?:display-name\s*=\s*\"([^\"]*)\";?\s*)?bindings\s*=\s*<([^>]+)>\s*;"
 
     for match in re.finditer(layer_pattern, keymap_content, re.DOTALL):
         layer_name = match.group(1)
-        bindings_content = match.group(2)
+        display_name = match.group(2)  # Will be None if no display-name found
+        bindings_content = match.group(3)
         bindings = extract_bindings_from_content(bindings_content)
-        layers[layer_name] = bindings
+        layers[layer_name] = {
+            'bindings': bindings,
+            'display_name': display_name
+        }
 
     return layers
 
@@ -202,7 +206,7 @@ def load_layout(layout_file):
             layout = json.load(f)
 
         if "layout" not in layout:
-            print(f"Error: Layout file must contain a 'layout' field")
+            print("Error: Layout file must contain a 'layout' field")
             return None
 
         return layout
@@ -222,7 +226,8 @@ def build_layer_structure(layers, layout):
     layout_matrix = layout["layout"]
     structured_layers = {}
 
-    for layer_name, bindings in layers.items():
+    for layer_name, layer_data in layers.items():
+        bindings = layer_data['bindings']
         layer_rows = []
         binding_index = 0
 
@@ -239,7 +244,10 @@ def build_layer_structure(layers, layout):
                     row_bindings.append(None)  # Empty position
             layer_rows.append(row_bindings)
 
-        structured_layers[layer_name] = layer_rows
+        structured_layers[layer_name] = {
+            'rows': layer_rows,
+            'display_name': layer_data['display_name']
+        }
 
     return structured_layers
 
@@ -250,7 +258,8 @@ def calculate_column_widths(structured_layers, layout, padding=DEFAULT_COLUMN_PA
     column_widths = [0] * num_columns
 
     # Find the maximum width needed for each column across all layers
-    for layer_rows in structured_layers.values():
+    for layer_data in structured_layers.values():
+        layer_rows = layer_data['rows']
         for row in layer_rows:
             for col_idx, binding in enumerate(row):
                 if binding is not None:
@@ -259,8 +268,17 @@ def calculate_column_widths(structured_layers, layout, padding=DEFAULT_COLUMN_PA
     return [width + padding for width in column_widths]
 
 
-def format_layer(layer_name, layer_rows, column_widths):
-    lines = [f"        {layer_name} {{", "            bindings = <"]
+def format_layer(layer_name, layer_data, column_widths):
+    layer_rows = layer_data['rows']
+    display_name = layer_data['display_name']
+    
+    lines = [f"        {layer_name} {{"]
+    
+    # Add display-name if it exists
+    if display_name:
+        lines.append(f'            display-name = "{display_name}";')
+    
+    lines.append("            bindings = <")
 
     for row in layer_rows:
         row_content = "   "  # Base indentation
@@ -326,8 +344,14 @@ def visual_debug_print_layer_bindings(layers, layout, column_widths):
 
     layout_matrix = layout["layout"]
 
-    for layer_name, bindings in layers.items():
-        print(f"\n  {Colors.BLUE}{Colors.BOLD}🔹 Layer: {layer_name}{Colors.RESET}")
+    for layer_name, layer_data in layers.items():
+        bindings = layer_data['bindings']
+        display_name = layer_data['display_name']
+        layer_title = f"Layer: {layer_name}"
+        if display_name:
+            layer_title += f' ("{display_name}")'
+        
+        print(f"\n  {Colors.BLUE}{Colors.BOLD}🔹 {layer_title}{Colors.RESET}")
         print(f"     Total bindings: {Colors.YELLOW}{len(bindings)}{Colors.RESET}")
 
         # Calculate layer-specific column widths for compact display
@@ -408,8 +432,8 @@ def visual_debug_print_formatted_layers(structured_layers, column_widths):
     print(f"\n{Colors.CYAN}📄 FORMATTED LAYERS OUTPUT{Colors.RESET}")
     print(f"{'─' * 50}")
 
-    for layer_name, layer_rows in structured_layers.items():
-        formatted_layer = format_layer(layer_name, layer_rows, column_widths)
+    for layer_name, layer_data in structured_layers.items():
+        formatted_layer = format_layer(layer_name, layer_data, column_widths)
         parsed_name, clean_bindings = parse_layer_for_debug(formatted_layer)
 
         print(f"\n{Colors.BLUE}{parsed_name}{Colors.RESET}")
@@ -499,9 +523,10 @@ def align_keymap_with_layout(keymap_file, layout_file, output_file=None, debug=F
     
     # Generate new keymap section content
     keymap_lines = ["    keymap {", '        compatible = "zmk,keymap";']
-    for layer_name, layer_rows in structured_layers.items():
-        formatted_layer = format_layer(layer_name, layer_rows, column_widths)
+    for layer_name, layer_data in structured_layers.items():
+        formatted_layer = format_layer(layer_name, layer_data, column_widths)
         keymap_lines.append(formatted_layer)
+        layer_rows = layer_data['rows']
         binding_count = sum(
             1 for row in layer_rows for binding in row if binding is not None
         )

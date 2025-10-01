@@ -275,30 +275,40 @@ class TestLayerExtraction:
         base_layer = layers["BASE"]
         layer2 = layers["LAYER2"]
         
-        assert len(base_layer) == 10  # 4+4+2 keys as per sample layout
-        assert len(layer2) == 10
+        # Check layer structure (new format with bindings and display_name)
+        assert isinstance(base_layer, dict)
+        assert isinstance(layer2, dict)
+        assert "bindings" in base_layer
+        assert "display_name" in base_layer
+        assert "bindings" in layer2
+        assert "display_name" in layer2
+        
+        assert len(base_layer["bindings"]) == 10  # 4+4+2 keys as per sample layout
+        assert len(layer2["bindings"]) == 10
         
         # Check first few bindings
-        assert base_layer[0] == "&kp Q"
-        assert base_layer[1] == "&kp W"
-        assert layer2[0] == "&kp N1"
-        assert layer2[1] == "&kp N2"
+        assert base_layer["bindings"][0] == "&kp Q"
+        assert base_layer["bindings"][1] == "&kp W"
+        assert layer2["bindings"][0] == "&kp N1"
+        assert layer2["bindings"][1] == "&kp N2"
 
     def test_layer_validation_insufficient_bindings(self):
         """Test validation of layers with insufficient bindings."""
         insufficient_file = get_test_file("test_keymaps/misaligned/glove80_input_insufficient_bindings.keymap")
         glove80_layout_file = get_test_file("layouts/glove80_80key_layout.json")
         
-        layout = load_layout(str(glove80_layout_file))
+        load_layout(str(glove80_layout_file))
         with open(insufficient_file, 'r') as f:
             content = f.read()
         layers = extract_all_layers(content)
         
         # Should extract layers but they may be insufficient
         assert len(layers) > 0
-        for layer_name, bindings in layers.items():
+        for layer_name, layer_data in layers.items():
             # Insufficient files should have fewer bindings than required
-            assert isinstance(bindings, list)
+            assert isinstance(layer_data, dict)
+            assert "bindings" in layer_data
+            assert isinstance(layer_data["bindings"], list)
 
 
 class TestColumnWidthCalculation:
@@ -306,17 +316,23 @@ class TestColumnWidthCalculation:
     
     def test_calculate_column_widths_basic(self, sample_layout):
         """Test basic column width calculation."""
-        # Create test layer structures
-        layer1_structure = [
-            ["&kp A", "&kp B", "&kp C", "&kp D"],
-            ["&kp E", "&kp F", "&kp G", "&kp H"],
-            [None, "&kp I", "&kp J", None]
-        ]
-        layer2_structure = [
-            ["&kp N1", "&kp N2", "&kp N3", "&kp N4"],
-            ["&kp N5", "&kp N6", "&kp N7", "&kp N8"],
-            [None, "&kp N9", "&kp N0", None]
-        ]
+        # Create test layer structures in new format
+        layer1_structure = {
+            'rows': [
+                ["&kp A", "&kp B", "&kp C", "&kp D"],
+                ["&kp E", "&kp F", "&kp G", "&kp H"],
+                [None, "&kp I", "&kp J", None]
+            ],
+            'display_name': None
+        }
+        layer2_structure = {
+            'rows': [
+                ["&kp N1", "&kp N2", "&kp N3", "&kp N4"],
+                ["&kp N5", "&kp N6", "&kp N7", "&kp N8"],
+                [None, "&kp N9", "&kp N0", None]
+            ],
+            'display_name': None
+        }
         
         layers = {"BASE": layer1_structure, "LAYER2": layer2_structure}
         
@@ -341,10 +357,13 @@ class TestColumnWidthCalculation:
             ]
         }
         
-        layer_structure = [
-            ["&hml LCTRL A", "&hmr RALT B", "&lt 1 SPACE"],
-            ["&hml LGUI TAB", "&caps_word", "&trans"]
-        ]
+        layer_structure = {
+            'rows': [
+                ["&hml LCTRL A", "&hmr RALT B", "&lt 1 SPACE"],
+                ["&hml LGUI TAB", "&caps_word", "&trans"]
+            ],
+            'display_name': None
+        }
         
         layers = {"BASE": layer_structure}
         
@@ -368,7 +387,7 @@ class TestLayerStructureBuilding:
     def test_build_layer_structure_basic(self, sample_layout):
         """Test basic layer structure building."""
         bindings = ["&kp A", "&kp B", "&kp C", "&kp D", "&kp E", "&kp F", "&kp G", "&kp H", "&kp I", "&kp J"]
-        layers = {"BASE": bindings}  # Function expects dict of layers
+        layers = {"BASE": {"bindings": bindings, "display_name": None}}  # Function expects new dict format
         
         # Build layer structure
         structure = build_layer_structure(layers, sample_layout)
@@ -377,9 +396,14 @@ class TestLayerStructureBuilding:
         assert isinstance(structure, dict)
         assert "BASE" in structure
         
-        layer_structure = structure["BASE"]
+        layer_data = structure["BASE"]
         
-        # Should return a 2D list matching the layout
+        # Should return a dict with 'rows' and 'display_name'
+        assert isinstance(layer_data, dict)
+        assert "rows" in layer_data
+        assert "display_name" in layer_data
+        
+        layer_structure = layer_data["rows"]
         assert isinstance(layer_structure, list)
         assert len(layer_structure) == 3  # 3 rows as per sample layout
         
@@ -397,7 +421,7 @@ class TestLayerStructureBuilding:
         """Test layer structure building with insufficient bindings."""
         # Only provide 8 bindings when 10 are needed
         bindings = ["&kp A", "&kp B", "&kp C", "&kp D", "&kp E", "&kp F", "&kp G", "&kp H"]
-        layers = {"LAYER2": bindings}  # Function expects dict of layers
+        layers = {"LAYER2": {"bindings": bindings, "display_name": None}}  # Function expects new dict format
         
         structure = build_layer_structure(layers, sample_layout)
         
@@ -405,7 +429,10 @@ class TestLayerStructureBuilding:
         assert isinstance(structure, dict)
         assert "LAYER2" in structure
         
-        layer_structure = structure["LAYER2"]
+        layer_data = structure["LAYER2"]
+        assert "rows" in layer_data
+        layer_structure = layer_data["rows"]
+        
         assert isinstance(layer_structure, list)
         assert len(layer_structure) == 3
         
@@ -425,14 +452,16 @@ class TestLayerStructureBuilding:
         }
         
         bindings = ["&kp A", "&kp B", "&kp C", "&kp D", "&kp E", "&kp F"]
-        layers = {"BASE": bindings}  # Function expects dict of layers
+        layers = {"BASE": {"bindings": bindings, "display_name": None}}  # Function expects new dict format
         
         structure = build_layer_structure(layers, layout)
         
         assert isinstance(structure, dict)
         assert "BASE" in structure
         
-        layer_structure = structure["BASE"]
+        layer_data = structure["BASE"]
+        assert "rows" in layer_data
+        layer_structure = layer_data["rows"]
         assert len(layer_structure) == 2
         assert layer_structure[0] == ["&kp A", "&kp B", "&kp C"]
         assert layer_structure[1] == ["&kp D", "&kp E", "&kp F"]
@@ -443,13 +472,16 @@ class TestLayerFormatting:
     
     def test_format_layer_basic(self):
         """Test basic layer formatting."""
-        layer_structure = [
-            ["&kp A", "&kp B", "&kp C"],
-            ["&kp D", "&kp E", "&kp F"]
-        ]
+        layer_data = {
+            'rows': [
+                ["&kp A", "&kp B", "&kp C"],
+                ["&kp D", "&kp E", "&kp F"]
+            ],
+            'display_name': None
+        }
         column_widths = [8, 8, 8]  # Fixed widths for consistent formatting
         
-        formatted = format_layer("BASE", layer_structure, column_widths)
+        formatted = format_layer("BASE", layer_data, column_widths)
         
         # Should return formatted string
         assert isinstance(formatted, str)
@@ -471,13 +503,16 @@ class TestLayerFormatting:
 
     def test_format_layer_with_none_values(self):
         """Test layer formatting with None values (missing keys)."""
-        layer_structure = [
-            ["&kp A", "&kp B", "&kp C"],
-            [None, "&kp D", None]  # Missing first and last keys
-        ]
+        layer_data = {
+            'rows': [
+                ["&kp A", "&kp B", "&kp C"],
+                [None, "&kp D", None]  # Missing first and last keys
+            ],
+            'display_name': None
+        }
         column_widths = [8, 8, 8]
         
-        formatted = format_layer("LAYER2", layer_structure, column_widths)
+        formatted = format_layer("LAYER2", layer_data, column_widths)
         
         assert isinstance(formatted, str)
         
@@ -491,13 +526,16 @@ class TestLayerFormatting:
 
     def test_format_layer_complex_bindings(self):
         """Test layer formatting with complex multi-parameter bindings."""
-        layer_structure = [
-            ["&hml LCTRL A", "&hmr RALT B", "&lt 1 SPACE"],
-            ["&hml LGUI TAB", "&caps_word", "&trans"]
-        ]
+        layer_data = {
+            'rows': [
+                ["&hml LCTRL A", "&hmr RALT B", "&lt 1 SPACE"],
+                ["&hml LGUI TAB", "&caps_word", "&trans"]
+            ],
+            'display_name': None
+        }
         column_widths = [16, 12, 14]  # Adequate widths for complex bindings
         
-        formatted = format_layer("COMPLEX", layer_structure, column_widths)
+        formatted = format_layer("COMPLEX", layer_data, column_widths)
         
         assert isinstance(formatted, str)
         
