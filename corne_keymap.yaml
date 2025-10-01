@@ -1,0 +1,260 @@
+layout: {zmk_keyboard: corne}
+layers:
+  BASE:
+  - TAB
+  - Q
+  - {t: W, h: MOUSE}
+  - {t: E, h: NAV}
+  - R
+  - T
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - \
+  - ESC
+  - {t: A, h: LSHIFT}
+  - {t: S, h: LGUI}
+  - {t: D, h: LALT}
+  - {t: F, h: LCTRL}
+  - {t: G, h: NPAD}
+  - {t: H, h: NPAD}
+  - {t: J, h: RCTRL}
+  - {t: K, h: RALT}
+  - {t: L, h: RGUI}
+  - {t: ;, h: RSHIFT}
+  - ''''
+  - SYSTEM
+  - Z
+  - X
+  - C
+  - V
+  - B
+  - N
+  - M
+  - ','
+  - .
+  - /
+  - SYSTEM
+  - NAV
+  - BSPC
+  - {t: DEL, h: DEV}
+  - {t: RET, h: '1'}
+  - SPACE
+  - '&caps_return'
+  DEV:
+  - '`'
+  - '!'
+  - '@'
+  - '%'
+  - {t: ▽, type: trans}
+  - '?'
+  - ^
+  - '`'
+  - '['
+  - ']'
+  - '='
+  - {t: ▽, type: trans}
+  - '#'
+  - ^
+  - '='
+  - _
+  - $
+  - '*'
+  - +
+  - '|'
+  - (
+  - )
+  - _
+  - '-'
+  - '~'
+  - <
+  - '|'
+  - '-'
+  - '>'
+  - /
+  - $
+  - '%'
+  - '{'
+  - '}'
+  - '&'
+  - {t: ▽, type: trans}
+  - \
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  NPAD:
+  - PREV
+  - NEXT
+  - PP
+  - UP ARROW
+  - VOL UP
+  - MUTE
+  - (
+  - KP 7
+  - KP 8
+  - KP 9
+  - KP MINUS
+  - SCROLLLOCK
+  - {t: ▽, type: trans}
+  - ''
+  - LEFT ARROW
+  - DOWN ARROW
+  - RIGHT ARROW
+  - {t: PG UP, type: held}
+  - '%'
+  - KP 4
+  - KP 5
+  - KP 6
+  - KP PLUS
+  - ''
+  - {t: ▽, type: trans}
+  - APP
+  - ''
+  - F11
+  - F12
+  - PG DN
+  - ','
+  - KP 1
+  - KP 2
+  - KP 3
+  - KP ENTER
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - {t: ▽, type: trans}
+  - KP 0
+  - KP 0
+  SYSTEM:
+  - BT CLR
+  - '&bt_0'
+  - '&bt_1'
+  - '&bt_2'
+  - '&bt_3'
+  - ''
+  - ''
+  - ''
+  - VOL UP
+  - ''
+  - ''
+  - BT CLR ALL
+  - '&bootloader'
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - PREV
+  - PP
+  - NEXT
+  - ''
+  - '&bootloader'
+  - {type: held}
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - VOL DN
+  - ''
+  - ''
+  - '&sys_reset'
+  - ''
+  - OUT USB
+  - OUT BLE
+  - ''
+  - ''
+  - ''
+  MOUSE:
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - PG UP
+  - '&mmv MOVE_UP'
+  - PG DN
+  - ''
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - '&msc SCRL_LEFT'
+  - '&mmv MOVE_LEFT'
+  - '&mmv MOVE_DOWN'
+  - '&mmv MOVE_RIGHT'
+  - '&mkp MB4'
+  - '&mkp MB5'
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - '&mkp LCLK'
+  - '&mkp MCLK'
+  - '&mkp RCLK'
+  - ''
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - {t: ▽, type: trans}
+  - '&msc SCRL_UP'
+  - '&msc SCRL_DOWN'
+  NAV:
+  - {t: ▽, type: trans}
+  - Gui+1
+  - Gui+2
+  - {t: Gui+3, type: held}
+  - Gui+4
+  - {t: ▽, type: trans}
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - {t: ▽, type: trans}
+  - Gui+5
+  - Gui+6
+  - Gui+7
+  - Gui+8
+  - {t: ▽, type: trans}
+  - LEFT ARROW
+  - DOWN ARROW
+  - UP ARROW
+  - RIGHT ARROW
+  - ''
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - ''

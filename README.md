@@ -1,4 +1,12 @@
-# ZMK Config - Keymap Alignment Tool
+# ZMK Config
+
+## Corne 42 Keymap
+
+![Corne42 Keymap](corne_keymap.svg)
+
+## Glove 80 Keymap
+
+![Glove80 Keymap](glove80_keymap.svg)
 
 A comprehensive ZMK keymap alignment tool that formats and validates ZMK keymap files using JSON layout definitions. This tool ensures consistent column alignment and proper formatting for complex multi-parameter behaviors.
 
