@@ -24,9 +24,9 @@
             display-name = "BASE";
             bindings = <
    &kp TAB      &kp Q        &ltl MOUSE W    &ltl NAV E      &kp R            &kp T                                      &kp Y           &kp U           &kp I           &kp O            &kp P           &kp BSLH
-   &kp ESC      &hml LGUI A  &hml LALT S     &hml LSHIFT D   &hml LCTRL F     &ltl NPAD G                                &ltr NPAD H     &hmr RCTRL J    &hmr RSHIFT K   &hmr RALT L      &hmr RGUI SEMI  &kp SINGLE_QUOTE
+   &kp ESC      &hml LGUI A  &hml LSHIFT S     &hml LALT D   &hml LCTRL F     &ltl NPAD G                                &ltr NPAD H     &hmr RCTRL J    &hmr RALT K   &hmr RSHIFT L      &hmr RGUI SEMI  &kp SINGLE_QUOTE
    &mo SYSTEM   &kp Z        &kp X           &kp C           &kp V            &kp B                                      &kp N           &kp M           &kp COMMA       &kp DOT          &kp FSLH        &mo SYSTEM
-                                                             &mo NAV          &kp BSPC      &lt DEV DEL   &hmrt DEV RET  &kp SPACE       &caps_return
+                                                             &mo NAV          &kp BSPC      &ltlt DEV DEL   &ltrt DEV RET  &kp SPACE       &caps_return
             >;
         };
         DEV {

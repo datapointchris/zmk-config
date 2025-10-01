@@ -120,6 +120,18 @@
             hold-trigger-key-positions = <KEYS_R THUMBS_L THUMBS_R>;
             bindings = <&mo>, <&kp>;
         };
+            
+        ltlt: layer_tap_left_thumb {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-on-release;
+            hold-trigger-key-positions = <KEYS_R THUMBS_R>; // Right hand keys + right thumbs
+            bindings = <&mo>, <&kp>;
+        };
 
         ltr: layer_tap_right {
             compatible = "zmk,behavior-hold-tap";
@@ -133,6 +145,18 @@
             bindings = <&mo>, <&kp>;
         };
 
+        ltrt: layer_tap_right_thumb {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-on-release;
+            hold-trigger-key-positions = <KEYS_L THUMBS_L>; // Left hand keys + left thumbs
+            bindings = <&mo>, <&kp>;
+        };
+        
         caps_shift: caps_word_shift_tap_dance {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
