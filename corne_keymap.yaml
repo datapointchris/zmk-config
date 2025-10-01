@@ -14,16 +14,16 @@ layers:
   - P
   - \
   - ESC
-  - {t: A, h: LSHIFT}
-  - {t: S, h: LGUI}
-  - {t: D, h: LALT}
+  - {t: A, h: LGUI}
+  - {t: S, h: LALT}
+  - {t: D, h: LSHIFT}
   - {t: F, h: LCTRL}
   - {t: G, h: NPAD}
   - {t: H, h: NPAD}
   - {t: J, h: RCTRL}
-  - {t: K, h: RALT}
-  - {t: L, h: RGUI}
-  - {t: ;, h: RSHIFT}
+  - {t: K, h: RSHIFT}
+  - {t: L, h: RALT}
+  - {t: ;, h: RGUI}
   - ''''
   - SYSTEM
   - Z

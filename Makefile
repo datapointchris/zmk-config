@@ -26,7 +26,7 @@ CORNE_SVG := corne_keymap.svg
 TEST_DIR := $(TESTS_DIR)
 PYTEST_FILE := $(TESTS_DIR)/test_align_keymap.py
 
-.PHONY: help align-glove80 align-corne align test test-verbose build build-glove80 build-corne clean
+.PHONY: help align-glove80 align-corne align sync sync-glove80 sync-corne draw draw-glove80 draw-corne test test-verbose build build-glove80 build-corne clean
 
 # Default target - show help
 help:
@@ -34,9 +34,15 @@ help:
 	@echo "==================="
 	@echo ""
 	@echo "Available targets:"
+	@echo "  sync           - Complete workflow: align, draw, and build for both keyboards"
+	@echo "  sync-glove80   - Complete workflow for Glove80 only (align + draw + build)"
+	@echo "  sync-corne     - Complete workflow for Corne only (align + draw + build)"
 	@echo "  align-glove80  - Align Glove80 keymap in place"
 	@echo "  align-corne    - Align Corne keymap in place" 
 	@echo "  align          - Align both keymaps"
+	@echo "  draw-glove80   - Generate SVG diagram for Glove80"
+	@echo "  draw-corne     - Generate SVG diagram for Corne"
+	@echo "  draw           - Generate SVG diagrams for both keyboards"
 	@echo "  test           - Run the test suite with pytest"
 	@echo "  test-verbose   - Run tests with detailed output" 
 	@echo "  build          - Build firmware for both keyboards"
@@ -44,6 +50,11 @@ help:
 	@echo "  build-corne    - Build only Corne firmware"
 	@echo "  clean          - Clean up temporary files and UF2 outputs"
 	@echo "  help           - Show this help message"
+	@echo ""
+	@echo "Workflow Examples:"
+	@echo "  make sync               # Complete workflow for both keyboards"
+	@echo "  make sync-glove80       # Complete workflow for Glove80 only"
+	@echo "  make sync-corne         # Complete workflow for Corne only"
 	@echo ""
 	@echo "Build Examples:"
 	@echo "  make build              # Build both keyboards"
@@ -204,5 +215,35 @@ sync:
 		echo "⏱️  Total time: $${minutes}m $${seconds}s"; \
 	else \
 		echo "❌ Sync failed - one or more tasks encountered an error"; \
+		exit 1; \
+	fi
+
+sync-glove80:
+	@echo "🚀 Starting Glove80 sync process..."
+	@start_time=$$(date +%s); \
+	if $(MAKE) align-glove80 draw-glove80 build-glove80; then \
+		end_time=$$(date +%s); \
+		elapsed=$$((end_time - start_time)); \
+		minutes=$$((elapsed / 60)); \
+		seconds=$$((elapsed % 60)); \
+		echo "🎉 Glove80 tasks completed successfully!"; \
+		echo "⏱️  Total time: $${minutes}m $${seconds}s"; \
+	else \
+		echo "❌ Glove80 sync failed - one or more tasks encountered an error"; \
+		exit 1; \
+	fi
+
+sync-corne:
+	@echo "🚀 Starting Corne sync process..."
+	@start_time=$$(date +%s); \
+	if $(MAKE) align-corne draw-corne build-corne; then \
+		end_time=$$(date +%s); \
+		elapsed=$$((end_time - start_time)); \
+		minutes=$$((elapsed / 60)); \
+		seconds=$$((elapsed % 60)); \
+		echo "🎉 Corne tasks completed successfully!"; 	\
+		echo "⏱️  Total time: $${minutes}m $${seconds}s"; \
+	else \
+		echo "❌ Corne sync failed - one or more tasks encountered an error"; \
 		exit 1; \
 	fi

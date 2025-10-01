@@ -55,6 +55,10 @@ make test
 ### Individual Keyboard Operations
 
 ```bash
+# Complete workflow for specific keyboard
+make sync-glove80
+make sync-corne
+
 # Align specific keyboard
 make align-glove80
 make align-corne
@@ -81,6 +85,7 @@ make build-corne
 
 ### Individual Operations
 
+- **`sync-glove80`** / **`sync-corne`** - Complete workflow for specific keyboard (align → draw → build)
 - **`align-glove80`** / **`align-corne`** - Align specific keymap
 - **`draw-glove80`** / **`draw-corne`** - Generate SVG for specific keyboard  
 - **`build-glove80`** / **`build-corne`** - Build firmware for specific keyboard
