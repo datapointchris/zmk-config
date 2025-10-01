@@ -1,6 +1,6 @@
 layout: {zmk_keyboard: glove80}
 layers:
-  '0':
+  BASE:
   - F1
   - F2
   - F3
@@ -25,8 +25,8 @@ layers:
   - '-'
   - TAB
   - Q
-  - {t: W, h: '4'}
-  - {t: E, h: '5'}
+  - {t: W, h: MOUSE}
+  - {t: E, h: NAV}
   - R
   - T
   - Y
@@ -40,8 +40,8 @@ layers:
   - {t: S, h: LGUI}
   - {t: D, h: LALT}
   - {t: F, h: LCTRL}
-  - {t: G, h: '2'}
-  - {t: H, h: '2'}
+  - {t: G, h: NPAD}
+  - {t: H, h: NPAD}
   - {t: J, h: RCTRL}
   - {t: K, h: RALT}
   - {t: L, h: RGUI}
@@ -65,14 +65,14 @@ layers:
   - .
   - /
   - PG UP
-  - {t: '&rgb_ug_status_macro', h: '3'}
-  - {t: HOME, h: '2'}
+  - {t: '&rgb_ug_status_macro', h: SYSTEM}
+  - {t: HOME, h: NPAD}
   - END
   - LEFT
   - RIGHT
   - BSPC
   - LSHFT
-  - {t: LALT, h: '1'}
+  - {t: LALT, h: DEV}
   - RET
   - '&caps_shift'
   - SPACE
@@ -81,7 +81,7 @@ layers:
   - '['
   - ']'
   - PG DN
-  '1':
+  DEV:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -162,7 +162,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  '2':
+  NPAD:
   - BRI DN
   - BRI UP
   - PREV
@@ -217,7 +217,7 @@ layers:
   - PG DN
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: '0', h: toggle}
+  - {t: BASE, h: toggle}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -227,7 +227,7 @@ layers:
   - KP 3
   - KP ENTER
   - {t: ▽, type: trans}
-  - {t: '&rgb_ug_status_macro', h: '3'}
+  - {t: '&rgb_ug_status_macro', h: SYSTEM}
   - CAPS
   - INS
   - F11
@@ -243,7 +243,7 @@ layers:
   - KP DOT
   - KP ENTER
   - {t: ▽, type: trans}
-  '3':
+  SYSTEM:
   - BT CLR
   - ''
   - ''
@@ -324,7 +324,7 @@ layers:
   - ''
   - ''
   - ''
-  '4':
+  MOUSE:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -405,7 +405,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  '5':
+  NAV:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
