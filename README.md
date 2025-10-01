@@ -1,81 +1,108 @@
-# ZMK Config
+# ZMK Configuration
 
-## Corne 42 Keymap
+Personal ZMK firmware configuration with automated keymap alignment, visual generation, and build automation for Corne and Glove80 keyboards.
 
-![Corne42 Keymap](corne_keymap.svg)
+## Overview
 
-## Glove 80 Keymap
+This repository contains:
 
+- **ZMK keymap configurations** for Corne 42-key and Glove80 80-key keyboards
+- **Keymap alignment tool** (`align_keymap.py`) for consistent formatting based on physical layouts
+- **Automated build system** (Makefile) for alignment, drawing generation, and firmware building
+- **Comprehensive test suite** ensuring reliability across keymap modifications
+- **Visual keymap generation** using keymap-drawer for documentation
+
+## Keymap Visualizations
+
+![Corne Keymap](corne_keymap.svg)
 ![Glove80 Keymap](glove80_keymap.svg)
 
-A comprehensive ZMK keymap alignment tool that formats and validates ZMK keymap files using JSON layout definitions. This tool ensures consistent column alignment and proper formatting for complex multi-parameter behaviors.
+## Architecture
 
-## Features
+### Core Components
 
-- **Automatic keymap alignment** - Formats keymaps to proper column alignment based on keyboard layout
-- **Multi-parameter behavior support** - Correctly handles complex ZMK behaviors like `&hml LCTRL A`, `&hmr &caps_word RALT`
-- **Layout validation** - Verifies binding counts match expected keyboard layout
-- **Comprehensive testing** - Full test suite covering all functionality with pytest
-- **Multiple keyboard support** - Works with any keyboard layout defined in JSON format
+1. **align_keymap.py** - Python script that parses ZMK keymap files and aligns bindings according to JSON layout definitions
+2. **Layout JSON files** - Define physical keyboard matrix (key positions vs. empty spaces)
+3. **Makefile automation** - Orchestrates alignment, drawing generation, testing, and firmware building
+4. **keymap-drawer integration** - Generates SVG visualizations from ZMK keymaps
+
+### Supported Keyboards
+
+- **Corne (42-key)** - 3x6 split with 3 thumb keys per side
+- **Glove80 (80-key)** - Curved split with thumb cluster and function row
 
 ## Quick Start
 
-### Align a keymap
+### Basic Operations
 
 ```bash
-# Align Glove80 keymap
-make align-glove80
+# Align keymaps to proper formatting
+make align
 
-# Align Corne keymap  
+# Generate visual representations
+make draw
+
+# Run complete workflow (align + draw + build)
+make sync
+
+# Build firmware for flashing
+make build
+
+# Run test suite
+make test
+```
+
+### Individual Keyboard Operations
+
+```bash
+# Align specific keyboard
+make align-glove80
 make align-corne
 
-# Align both keyboards
-make align
+# Generate drawings for specific keyboard
+make draw-glove80
+make draw-corne
+
+# Build firmware for specific keyboard
+make build-glove80
+make build-corne
 ```
 
-### Run tests
+## Makefile Targets
 
-```bash
-# Run full test suite
-make test
+### Primary Workflows
 
-# Run tests with minimal output
-make test-fast
+- **`sync`** - Complete workflow: align → draw → build (includes timing)
+- **`align`** - Align both keymaps using layout definitions
+- **`draw`** - Generate SVG visualizations for both keyboards
+- **`build`** - Build firmware for both keyboards
+- **`test`** - Run comprehensive test suite
+- **`clean`** - Remove generated files (UF2s, temporaries)
 
-# Run tests with verbose output
-make test-verbose
-```
+### Individual Operations
 
-### Build firmware
+- **`align-glove80`** / **`align-corne`** - Align specific keymap
+- **`draw-glove80`** / **`draw-corne`** - Generate SVG for specific keyboard  
+- **`build-glove80`** / **`build-corne`** - Build firmware for specific keyboard
+- **`test-verbose`** - Run tests with detailed output
 
-```bash
-make build
-```
+## Keymap Alignment System
 
-## Usage
+### Purpose
 
-### Command Line
+ZMK keymaps with complex behaviors (home row mods, layer-taps, etc.) become difficult to read without proper alignment. This tool automatically formats keymaps to align bindings in columns matching the physical keyboard layout.
 
-```bash
-python3 align_keymap.py -k <keymap_file> -l <layout_file> [-o <output_file>]
+### How It Works
 
-# Examples:
-python3 align_keymap.py -k config/glove80.keymap -l glove80_layout.json
-python3 align_keymap.py -k config/glove80.keymap -l glove80_layout.json -o aligned_output.keymap
-```
+1. **Parse keymap** - Extract layer definitions and bindings from ZMK keymap files
+2. **Load layout** - Read JSON layout defining physical key positions
+3. **Calculate widths** - Determine optimal column widths for alignment
+4. **Format output** - Align bindings in columns matching physical layout
 
-### Options
+### Layout Definitions
 
-- `-k, --keymap` - Input ZMK keymap file
-- `-l, --layout` - JSON layout definition file
-- `-o, --output` - Output file (optional, defaults to updating input file)
-- `--debug` - Enable debug output
+JSON files define physical keyboard matrices:
 
-## Layout Files
-
-Layout files define the physical keyboard matrix in JSON format:
-
-```json
 ```json
 {
   "name": "Keyboard Layout",
@@ -87,146 +114,131 @@ Layout files define the physical keyboard matrix in JSON format:
 }
 ```
 
-- `"X"` - Active key position
-- `"-"` - No key at this position
+- `"X"` = Key position
+- `"-"` = Empty space (no key)
 
-## Project Structure
+### Supported Binding Types
+
+- **Simple keycodes**: `&kp A`, `&trans`, `&none`
+- **Multi-parameter behaviors**: `&hml LCTRL A`, `&lt 1 SPACE`
+- **Nested behaviors**: `&hmr &caps_word RALT`
+- **Complex behaviors**: All ZMK behaviors (BT, RGB, media, mouse, etc.)
+
+## Visual Generation
+
+Uses [keymap-drawer](https://github.com/caksoylar/keymap-drawer) to generate SVG visualizations:
+
+1. **Parse ZMK keymap** → YAML intermediate format
+2. **Generate SVG** from YAML using keymap-drawer
+3. **Output files**:
+   - `*_keymap.yaml` - Intermediate representation
+   - `*_keymap.svg` - Visual representation
+
+## Testing Framework
+
+### Test Coverage
+
+- **Layout loading** - JSON parsing and validation
+- **Binding extraction** - Complex behavior parsing
+- **Alignment formatting** - Column width calculation and output
+- **Error handling** - File validation, binding count validation
+- **Integration** - End-to-end workflow testing
+
+### Test Structure
 
 ```text
-├── align_keymap.py          # Main alignment script
-├── Makefile                 # Build and test automation
-├── config/                  # Keymap configurations
-│   ├── glove80.keymap      
-│   └── corne.keymap      
-├── tests/                   # Comprehensive test suite
-│   ├── layouts/            # JSON layout files
-│   ├── test_keymaps/       
-│   │   ├── correct/        # Hand-aligned reference files
-│   │   ├── misaligned/     # Test input files
-│   │   └── test_output/    # Generated test outputs
-│   ├── simple_tests/       # Simple test cases
-│   └── test_align_keymap.py  # Main test file
-├── glove80_layout.json     # Glove80 80-key layout
-└── corne_layout.json     # Corne 42-key layout
-```
-
-## Testing
-
-### Test Suite Overview
-
-The test suite validates ALL essential functionality:
-
-**Core Functionality:**
-
-- Layout loading from JSON files  
-- Binding extraction from keymap content (handles comments, complex behaviors)
-- Layer validation with helpful error messages
-- Column width calculation and alignment formatting
-- Complete workflow integration
-
-**Binding Types Tested:**
-
-- Simple keycodes: `&kp A`, `&trans`, `&none`
-- Multi-parameter behaviors: `&hml LCTRL A`, `&hmr RALT B`, `&lt 1 SPACE`
-- Behaviors with behavior parameters: `&hmr &caps_word RALT`, `&hmrt RSHFT &caps_word`
-- All ZMK binding types: bluetooth, media, RGB, mouse, system
-
-**Error Handling:**
-
-- Missing/malformed files
-- Incorrect binding counts with position details
-- Invalid JSON layouts  
-- Edge cases and unusual formatting
-
-### Test Files
-
-**Reference Files (Hand-Aligned):**
-
-- `glove80_reference_properly_aligned.keymap` - Perfect alignment reference
-- `glove80_reference_reverse_key_order.keymap` - Reverse key order reference
-
-**Test Input Files:**
-
-- `glove80_input_badly_aligned.keymap` - Poor alignment formatting
-- `glove80_input_cramped_no_spacing.keymap` - All keys crammed together
-- `glove80_input_insufficient_bindings.keymap` - Missing bindings
-- `glove80_input_excess_bindings.keymap` - Too many bindings
-
-### Running Tests
-
-```bash
-# Run all tests with pytest
-make test
-
-# Run with minimal output
-make test-fast  
-
-# Run with extra verbose output
-make test-verbose
-
-# Run specific test class
-python3 -m pytest tests/test_align_keymap.py::TestBindingExtraction -v
-
-# Run specific test
-python3 -m pytest tests/test_align_keymap.py::TestBindingExtraction::test_glove80_specific_behaviors -v
+tests/
+├── test_align_keymap.py        # Main test suite
+├── layouts/                    # Test layout definitions
+├── simple_tests/              # Basic test cases
+└── test_keymaps/
+    ├── correct/               # Reference files (hand-aligned)
+    ├── misaligned/           # Test input files
+    └── test_output/          # Generated test outputs
 ```
 
 ### Key Test Cases
 
-**Validation Testing:**
+- **Validation**: Binding count verification with detailed error messages
+- **Parsing**: Complex multi-parameter behavior extraction
+- **Alignment**: Byte-for-byte comparison with reference files
+- **Error Recovery**: Graceful handling of malformed inputs
 
-- Tests verify binding count validation with helpful error messages
-- Multiple test keymaps with various binding count issues
-- Position-specific error reporting
+### Running Tests
 
-**Alignment Workflow:**
+```bash
+make test           # Full test suite
+make test-verbose   # Detailed output
+python3 -m pytest tests/test_align_keymap.py::TestClass::test_method -v
+```
 
-- End-to-end testing from misaligned input to properly aligned output
-- Byte-for-byte comparison with hand-aligned reference files
-- File size and checksum validation
+## Build System
 
-**Complex Binding Parsing:**
+### Firmware Building
 
-- Multi-parameter behaviors like `&hml LCTRL A` parsed as single units
-- Nested behaviors like `&hmr &caps_word RALT` handled correctly  
-- Thumb-specific behaviors like `&hmrt RSHFT &caps_word` supported
+Uses Docker-based ZMK build system:
 
-**Integration Testing:**
+- **Glove80**: Custom Nix-based build via MoErgo's ZMK fork
+- **Corne**: Standard ZMK build with nice!nano v2 controller
+- **Output**: UF2 files ready for flashing
 
-- Real keymap files test complete workflow
-- Multiple keyboard layout support
-- Error recovery and graceful failure
+### Build Dependencies
 
-Expected output: `20 passed in X.XXs` with pytest
+- **Docker** - Required for firmware compilation
+- **keymap-drawer** - For SVG generation (`pip install keymap-drawer`)
+- **Python 3.7+** - For alignment script
+- **pytest** - For test execution
 
-## Supported Keyboards
+## Project Structure
 
-- **Glove80** - 80-key split keyboard with thumb clusters
-- **Corne** - 42-key split keyboard
-- **Custom layouts** - Any keyboard with JSON layout definition
-
-## Requirements
-
-- Python 3.7+
-- pytest (for running tests)
-- ZMK-compatible keymap files
+```text
+├── align_keymap.py             # Keymap alignment script
+├── Makefile                    # Build automation
+├── build.sh                    # Docker build wrapper
+├── config/                     # ZMK configurations
+│   ├── glove80.keymap         # Glove80 keymap
+│   ├── corne.keymap           # Corne keymap
+│   ├── *.conf                 # Board configurations
+│   └── shared_behaviors.dtsi  # Common behaviors
+├── tests/                      # Test suite
+├── *_layout.json              # Keyboard layout definitions
+├── *_keymap.yaml              # keymap-drawer intermediate files
+├── *_keymap.svg               # Generated visualizations
+└── *.uf2                      # Compiled firmware (gitignored)
+```
 
 ## Development
 
 ### Adding New Keyboard Support
 
-1. Create JSON layout file defining key positions
-2. Add Makefile targets for alignment
-3. Add test cases for the new layout
-4. Test with sample keymap files
+1. **Create layout JSON** defining physical key positions
+2. **Add Makefile targets** for align/draw/build operations
+3. **Create test cases** for the new layout
+4. **Test workflow** with sample keymap
 
-### Contributing
+### Modifying Keymaps
 
-1. Ensure all tests pass: `make test`
-2. Add tests for new functionality  
-3. Follow existing code style and patterns
-4. Update documentation as needed
+1. **Edit keymap files** in `config/`
+2. **Run alignment**: `make align`
+3. **Validate changes**: `make test`
+4. **Generate visuals**: `make draw`
+5. **Build firmware**: `make build`
+
+### Code Quality
+
+- **Test coverage**: All functionality covered by pytest
+- **Error handling**: Comprehensive validation and recovery
+- **Documentation**: Technical comments and clear structure
+- **Automation**: Minimal manual intervention required
+
+## Dependencies
+
+- **Python 3.7+** with standard library
+- **Docker** for firmware building
+- **keymap-drawer** for visualization generation
+- **pytest** for test execution
+- **ZMK-compatible keymap files**
 
 ## License
 
-This project is part of a ZMK configuration setup for custom keyboard layouts.
+Part of personal ZMK configuration setup. Code provided as-is for reference.
