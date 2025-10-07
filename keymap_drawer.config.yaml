@@ -25,7 +25,8 @@ parse_config:
   # Define layer names if display-name doesn't work
   layer_names:
     - BASE
-    - DEV
+    - DEVLEFT
+    - DEVRIGHT
     - NPAD
     - SYSTEM
     - MOUSE
