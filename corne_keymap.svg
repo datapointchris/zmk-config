@@ -151,9 +151,7 @@ path.combo { stroke-width: 3;}</style>
 <g transform="translate(350, 50)" class="key keypos-3">
 <rect rx="6" ry="6" x="-48" y="-48" width="96" height="96" class="key"/>
 <text x="0" y="0" class="key tap">E</text>
-<a href="#NAV">
-<text x="0" y="46" class="key hold layer-activator">NAV</text>
-</a></g>
+</g>
 <g transform="translate(450, 62)" class="key keypos-4">
 <rect rx="6" ry="6" x="-48" y="-48" width="96" height="96" class="key"/>
 <text x="0" y="0" class="key tap">R</text>

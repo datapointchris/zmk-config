@@ -1,7 +1,7 @@
 layout: {zmk_keyboard: corne}
 layers:
   BASE:
-  - [TAB, Q, {t: W, h: MOUSE}, {t: E, h: NAV}, R, T, Y, U, I, O, P, \]
+  - [TAB, Q, {t: W, h: MOUSE}, E, R, T, Y, U, I, O, P, \]
   - [ESC, {t: A, h: LGUI}, {t: S, h: LSHIFT}, {t: D, h: LALT}, {t: F, h: LCTRL}, {t: G, h: NPAD}, {t: H, h: NPAD}, {t: J, h: RCTRL}, {t: K, h: RALT}, {t: L, h: RSHIFT}, {t: ;, h: RGUI}, '''']
   - [SYSTEM, Z, X, C, V, B, N, M, ',', ., /, SYSTEM]
   - [NAV, BSPC, {t: DEL, h: DEVRIGHT}, {t: RET, h: DEVLEFT}, SPACE, Enter/Caps]
