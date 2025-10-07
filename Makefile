@@ -10,11 +10,13 @@ CORNE_KEYMAP := $(CONFIG_DIR)/corne.keymap
 CORNE_LAYOUT := corne_layout.json
 CORNE_DRAWER_YAML := corne_keymap.yaml
 CORNE_SVG := corne_keymap.svg
+CORNE_JPG := corne_keymap.jpg
 
 GLOVE80_KEYMAP := $(CONFIG_DIR)/glove80.keymap
 GLOVE80_LAYOUT := glove80_layout.json
 GLOVE80_DRAWER_YAML := glove80_keymap.yaml
 GLOVE80_SVG := glove80_keymap.svg
+GLOVE80_JPG := glove80_keymap.jpg
 
 TEST_DIR := $(TESTS_DIR)
 PYTEST_FILE := $(TESTS_DIR)/test_align_keymap.py
@@ -46,11 +48,11 @@ help:
 	@echo "  clean          - Remove temp files and UF2s"
 
 align-glove80:
-	@$(PYTHON) $(ALIGN_SCRIPT) --keymap $(GLOVE80_KEYMAP) --layout $(GLOVE80_LAYOUT)
+	$(PYTHON) $(ALIGN_SCRIPT) --keymap $(GLOVE80_KEYMAP) --layout $(GLOVE80_LAYOUT)
 	@echo "✅ Glove80 keymap aligned"
 
 align-corne:
-	@$(PYTHON) $(ALIGN_SCRIPT) --keymap $(CORNE_KEYMAP) --layout $(CORNE_LAYOUT)
+	$(PYTHON) $(ALIGN_SCRIPT) --keymap $(CORNE_KEYMAP) --layout $(CORNE_LAYOUT)
 	@echo "✅ Corne keymap aligned"
 
 align: align-glove80 align-corne
@@ -64,29 +66,33 @@ test-verbose:
 build: build-glove80 build-corne
 
 build-glove80:
-	@./build.sh glove80
+	./build.sh glove80
 	@echo "✅ Glove80 firmware built"
 
 build-corne:
-	@./build.sh corne
+	./build.sh corne
 	@echo "✅ Corne firmware built"
 
 draw: draw-glove80 draw-corne
 
 draw-glove80:
-	@keymap -c keymap_drawer.config.yaml draw $(GLOVE80_DRAWER_YAML) > $(GLOVE80_SVG)
+	keymap -c keymap_drawer.config.yaml draw $(GLOVE80_DRAWER_YAML) > $(GLOVE80_SVG)
 	@echo "✅ $(GLOVE80_SVG)"
-
+	magick $(GLOVE80_SVG) $(GLOVE80_JPG)
+	@echo "✅ $(GLOVE80_JPG)"
+	 
 draw-corne:
-	@keymap -c keymap_drawer.config.yaml draw $(CORNE_DRAWER_YAML) > $(CORNE_SVG)
+	keymap -c keymap_drawer.config.yaml draw $(CORNE_DRAWER_YAML) > $(CORNE_SVG)
 	@echo "✅ $(CORNE_SVG)"
+	magick $(CORNE_SVG) $(CORNE_JPG)
+	@echo "✅ $(CORNE_JPG)"
 
 clean:
-	@find . -name "*.pyc" -delete 2>/dev/null || true
-	@find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
-	@find . -name "*.tmp" -delete 2>/dev/null || true
-	@find . -name "*~" -delete 2>/dev/null || true
-	@rm -f ./*.uf2 2>/dev/null || true
+	find . -name "*.pyc" -delete 2>/dev/null || true
+	find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+	find . -name "*.tmp" -delete 2>/dev/null || true
+	find . -name "*~" -delete 2>/dev/null || true
+	rm -f ./*.uf2 2>/dev/null || true
 	@echo "✅ Cleaned"
 
 sync: align draw build
