@@ -34,11 +34,11 @@ parse_config:
 
 draw_config:
   # Optional: Customize appearance
-  key_w: 60
-  key_h: 56
+  key_w: 100
+  key_h: 100
   split_gap: 30
-  combo_w: 24
-  combo_h: 20
+  combo_w: 40
+  combo_h: 36
   
   # Font sizes
   inner_pad_w: 2
@@ -47,6 +47,16 @@ draw_config:
   outer_pad_h: 20
   
   # Legend sizes
-  glyph_tap_size: 14
-  glyph_hold_size: 12
-  glyph_shifted_size: 10
+  glyph_tap_size: 15
+  glyph_hold_size: 14
+  glyph_shifted_size: 14
+  shrink_wide_legends: 0
+
+  svg_extra_style: |
+    rect.key { fill: #f6f8fa; stroke: #c9cccf; stroke-width: 1;}
+    rect.held, rect.combo.held { fill: #fdd;}
+    rect.ghost, rect.combo.ghost { fill: #ddd; stroke-dasharray: none; stroke-width: 1;}
+    rect.thumb, rect.combo.thumb { fill: #303030; stroke-width: 0;}
+    svg.keymap { background-color: #303030;}
+    text.label { stroke: none; fill: #e0f0f0;}
+    path.combo { stroke-width: 3;}

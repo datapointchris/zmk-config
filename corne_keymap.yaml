@@ -22,7 +22,7 @@ layers:
   - [▽, ▽, '', ▽, KP 0, KP 0]
   SYSTEM:
   - [BT CLR, BT 0, BT 1, BT 2, BT 3, '', '', '', VOL UP, '', '', BT CLR ALL]
-  - ['&bootloader', '', '', '', '', '', '', PREV, PP, NEXT, '', '&bootloader']
+  - ['&bootloader', '', '', '', '', 'CTRL ALT DEL', '', PREV, PP, NEXT, '', '&bootloader']
   - [{type: held}, '', '', '', '', '', '', '', VOL DN, '', '', '&sys_reset']
   - ['', OUT USB, OUT BLE, '', '', '']
   MOUSE:
@@ -38,7 +38,7 @@ layers:
 combos:
   - {p: [15, 16], k: '(', l: [BASE]}
   - {p: [14, 15], k: '[', l: [BASE]}
-  - {p: [14, 16], k: '{', l: [BASE]}
+  - {p: [14, 16], k: '{', l: [BASE], a: top, o: -0.05}
   - {p: [19, 20], k: ')', l: [BASE]}
   - {p: [20, 21], k: ']', l: [BASE]}
-  - {p: [19, 21], k: '}', l: [BASE]}
+  - {p: [19, 21], k: '}', l: [BASE], a: top, o: -0.05}
