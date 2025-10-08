@@ -2,11 +2,11 @@ layout: {zmk_keyboard: corne}
 layers:
   BASE:
   - [TAB, Q, {t: W, h: MOUSE}, E, R, T, Y, U, I, O, P, \]
-  - [ESC, {t: A, h: LGUI}, {t: S, h: LSHIFT}, {t: D, h: LALT}, {t: F, h: LCTRL}, {t: G, h: NPAD}, {t: H, h: NPAD}, {t: J, h: RCTRL}, {t: K, h: RALT}, {t: L, h: RSHIFT}, {t: ;, h: RGUI}, '''']
+  - [ESC, {t: A, h: LGUI}, {t: S, h: LSHIFT}, {t: D, h: LALT}, {t: F, h: LCTRL}, G, H, {t: J, h: RCTRL}, {t: K, h: RALT}, {t: L, h: RSHIFT}, {t: ;, h: RGUI}, '''']
   - [SYSTEM, Z, X, C, V, B, N, M, ',', ., /, SYSTEM]
-  - [NAV, BSPC, {t: DEL, h: DEVRIGHT}, {t: RET, h: DEVLEFT}, SPACE, Enter/Caps]
+  - [NAV, BSPC, {t: DEL, h: NPAD}, {t: RET, h: DEVLEFT}, SPACE, Enter/Caps]
   DEVLEFT:
-  - ['`', '!', '@', '%', '', '?', '', '', '', '', '', '']
+  - ['`', '!', '@', '%', '&', '?', '', '', '', '', '', '']
   - ['#', ^, '=', _, $, '*', '', '', '', '', '', '']
   - ['~', <, '|', '-', '>', /, '', '', '', '', '', '']
   - ['\', '', '', {type: held}, '', '']
@@ -14,12 +14,12 @@ layers:
   - ['', '', '', UP ARROW, '', '', ^, '`', '[', ']', '=', '']
   - ['', '', LEFT ARROW, DOWN ARROW, RIGHT ARROW, '', +, {t: '|', h: RCTRL}, {t: '(', h: RALT}, {t: ')', h: RSHIFT}, {t: ':', h: RGUI}, '-']
   - ['', '', '', '', '', '', $, '%', '{', '}', '&', '']
-  - ['', '', {type: held}, '', '', '']
+  - ['', '', '', '', '', '']
   NPAD:
-  - [PREV, NEXT, PP, UP ARROW, VOL UP, MUTE, (, KP 7, KP 8, KP 9, KP MINUS, SCROLLLOCK]
-  - [▽, '', LEFT ARROW, DOWN ARROW, RIGHT ARROW, {t: PG UP, type: held}, '%', KP 4, KP 5, KP 6, KP PLUS, '']
-  - [▽, APP, '', F11, F12, PG DN, ',', KP 1, KP 2, KP 3, KP ENTER, ▽]
-  - [▽, ▽, '', ▽, KP 0, KP 0]
+  - [PREV, NEXT, PP, UP ARROW, VOL UP, MUTE, +, KP 7, KP 8, KP 9, KP MINUS, SCROLLLOCK]
+  - [▽, '', LEFT ARROW, DOWN ARROW, RIGHT ARROW, PG UP, _, {t: KP 4, h: RCTRL}, {t: KP 5, h: RALT}, {t: KP 6, h: RSHIFT}, {t: ':', h: RGUI}, '-']
+  - [▽, APP, '', F11, F12, PG DN, ',', KP 1, KP 2, KP 3, '.', KP ENTER]
+  - [▽, ▽, {type: held}, ▽, KP 0, KP 0]
   SYSTEM:
   - [BT CLR, BT 0, BT 1, BT 2, BT 3, '', '', '', VOL UP, '', '', BT CLR ALL]
   - ['&bootloader', '', '', '', '', 'CTRL ALT DEL', '', PREV, PP, NEXT, '', '&bootloader']
@@ -31,10 +31,10 @@ layers:
   - [▽, ▽, ▽, ▽, ▽, ▽, '', '&mkp LCLK', '&mkp MCLK', '&mkp RCLK', '', '']
   - [▽, ▽, '', ▽, '&msc SCRL_UP', '&msc SCRL_DOWN']
   NAV:
-  - [▽, Gui+1, Gui+2, {t: Gui+3, type: held}, Gui+4, ▽, '', '', '', '', '', '']
+  - [▽, Gui+1, Gui+2, Gui+3, Gui+4, ▽, '', '', '', '', '', '']
   - [▽, Gui+5, Gui+6, Gui+7, Gui+8, ▽, LEFT ARROW, DOWN ARROW, UP ARROW, RIGHT ARROW, '', '']
   - [▽, ▽, ▽, ▽, ▽, ▽, '', '', '', '', '', '']
-  - ['', ▽, ▽, ▽, '', '']
+  - [{type: held}, ▽, ▽, ▽, '', '']
 combos:
   - {p: [15, 16], k: '(', l: [BASE]}
   - {p: [14, 15], k: '[', l: [BASE]}
