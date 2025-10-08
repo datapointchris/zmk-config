@@ -38,7 +38,7 @@
         ctrlaltdel: ctrl_alt_delete {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LCTRL>, <&kp LALT>, <&kp DEL>;
+            bindings = <&kp LC(LA(DEL))>;
         };
     };
     combos {
