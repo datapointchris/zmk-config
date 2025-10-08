@@ -338,18 +338,26 @@ path.combo { stroke-width: 3;}</style>
 <text x="350" y="116" class="combo tap">{</text>
 </g>
 <g class="combo combopos-3">
+<rect rx="6" ry="6" x="180" y="157" width="40" height="36" class="combo"/>
+<text x="200" y="175" class="combo tap">_</text>
+</g>
+<g class="combo combopos-4">
 <rect rx="6" ry="6" x="1080" y="138" width="40" height="36" class="combo"/>
 <text x="1100" y="156" class="combo tap">)</text>
 </g>
-<g class="combo combopos-4">
+<g class="combo combopos-5">
 <rect rx="6" ry="6" x="1180" y="138" width="40" height="36" class="combo"/>
 <text x="1200" y="156" class="combo tap">]</text>
 </g>
-<g class="combo combopos-5">
+<g class="combo combopos-6">
 <path d="M1150,116 h-94 a6.0,6.0 0 0 0 -6.0,6.0 v7" class="combo"/>
 <path d="M1150,116 h94 a6.0,6.0 0 0 1 6.0,6.0 v7" class="combo"/>
 <rect rx="6" ry="6" x="1130" y="98" width="40" height="36" class="combo"/>
 <text x="1150" y="116" class="combo tap">}</text>
+</g>
+<g class="combo combopos-7">
+<rect rx="6" ry="6" x="1280" y="157" width="40" height="36" class="combo"/>
+<text x="1300" y="175" class="combo tap">-</text>
 </g>
 </g>
 </g>
